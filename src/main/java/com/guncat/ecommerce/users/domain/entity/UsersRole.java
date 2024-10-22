@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @ToString
+@EqualsAndHashCode
 @Builder
 @Table(name = "users_role")
 public class UsersRole {

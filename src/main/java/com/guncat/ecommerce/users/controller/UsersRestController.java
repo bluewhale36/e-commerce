@@ -28,12 +28,18 @@ public class UsersRestController {
      */
     @PostMapping("/login")
     public void login(@ModelAttribute LoginDTO loginDTO) {
-        System.out.println(loginDTO);
-
         userDetailsService.loadUserByUsername(loginDTO.getUserId());
-
     }
 
+    /**
+     * 사용자의 최종 회원 가입 요청.<br/>
+     * 아이디 중복 체크, 이메일 중복 체크 및 인증이 완료된 후 실행되는 request.<br/>
+     * 위의 중복 확인 및 인증 여부 재확인 후 Service Layer 호출.
+     * @param registerDTO 가입 시 요구되는 데이터 DTO 객체.
+     * @param session 이메일 인증 코드 저장.
+     * @throws CodeNotMatchException 인증 코드가 일치하지 않을 경우.
+     * @throws DuplicatedInfoException 아이디 또는 이메일이 중복되었을 경우.
+     */
     @PostMapping("/join")
     public void join(@ModelAttribute RegisterDTO registerDTO,
                        HttpSession session) {
