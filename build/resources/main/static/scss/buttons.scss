@@ -1,0 +1,97 @@
+@use 'color-functions' as cf;
+@use 'colors' as c;
+
+
+@mixin btn-space-variants() {
+    --btn-padding-x: .375rem;
+    --btn-padding-y: .75rem;
+    --btn-margin-x: .25rem;
+    --btn-margin-y: .125rem;
+}
+@mixin btn-color-variants($color, $type) {
+    @if ($type == 'filled') {
+        --btn-color: #{cf.contrast-color($color)};
+        --btn-border-color: #{$color};
+        --btn-bg-color: #{$color};
+        --btn-hover-color: var(--btn-color);
+        --btn-hover-border-color: var(--btn-border-color);
+        --btn-hover-bg-color: #{cf.hover-bg-color($color)};
+        --btn-active-bg-color: #{cf.active-bg-color($color)};
+        --btn-disabled-color: #{cf.disabled-color(cf.contrast-color($color))};
+        --btn-disabled-border-color: #{cf.disabled-color($color)};
+        --btn-disabled-bg-color: #{cf.disabled-color($color)};
+    } @else {
+        --btn-color: #{$color};
+        --btn-border-color: #{$color};
+        --btn-bg-color: #{c.$white};
+        --btn-hover-color: #{cf.contrast-color($color)};
+        --btn-hover-border-color: var(--btn-border-color);
+        --btn-hover-bg-color: #{cf.hover-bg-color($color)};
+        --btn-active-bg-color: #{cf.active-bg-color($color)};
+        --btn-disabled-color: #{cf.disabled-color($color)};
+        --btn-disabled-border-color: #{cf.disabled-color($color)};
+        --btn-disabled-bg-color: #{cf.disabled-color(c.$white)};
+    }
+}
+
+$button-types: (
+    "filled", "outlined"
+);
+
+.btn {
+    @include btn-space-variants();
+    --btn-font-size: 1rem;
+    --btn-font-weight: 400;
+    --btn-line-height: 1.5;
+    --btn-border-width: 1px;
+    --btn-border-radius: .375rem;
+    @include btn-color-variants(#FFFFFF00, "filled");
+
+    display: inline-block;
+    margin: var(--btn-margin-y) var(--btn-margin-x);
+    padding: var(--btn-padding-y) var(--btn-padding-x);
+    font-size: var(--btn-font-size);
+    font-weight: var(--btn-font-weight);
+    color: var(--btn-color);
+    background-color: var(--btn-bg-color);
+    border: var(--btn-border-width) solid var(--btn-border-color);
+    border-radius: var(--btn-border-radius);
+    line-height: var(--btn-line-height);
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    transition: all .15s ease-in-out;
+
+    &:hover {
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+        color: var(--btn-hover-color);
+        border-color: var(--btn-hover-border-color);
+        background-color: var(--btn-hover-bg-color);
+        cursor: pointer;
+    }
+    &:active {
+        background-color: var(--btn-active-bg-color);
+        cursor: pointer;
+    }
+    &:disabled {
+        color: var(--btn-disabled-color);
+        background-color: var(--btn-disabled-bg-color);
+        border-color: var(--btn-disabled-border-color);
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+}
+
+
+// $key 가 primary 일 때, $value 는 그에 대한 색상.
+@each $key, $value in c.$theme-color-variants {
+
+    // $one-type : filled, outlined
+    @each $one-type in $button-types {
+
+        // .btn-primary-filled, .btn-warning-outlined
+        .btn-#{$key}-#{$one-type} {
+            @include btn-color-variants($value, $one-type);
+        }
+    }
+}

@@ -1,0 +1,66 @@
+/*
+
+/css/fragments/menu.css
+
+grid 의 menu 디자인, 애니메이션 정의하는 css 파일.
+
+ */
+
+
+div#menu {
+    width: fit-content;
+}
+
+div#menu > div {
+    display: block;
+    width: 0; /* grid에서 사이드 메뉴 없게 인식하도록 */
+    height: 100dvh;
+    position: sticky;
+    top: 50px;
+    transform: translateX(-100px); /* 사이드 메뉴 내 요소 안보이게 하도록 */
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+div#menu > div > a {
+    display: block;
+    word-wrap: break-word;
+    word-break: break-all;
+    margin: 10px;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+/* 메뉴 바 나오는 애니메이션 (화면에 보이는) */
+.ani-slidein {
+    animation-duration: 1s;
+    animation-name: slidein;
+    animation-fill-mode: forwards;
+}
+@keyframes slidein {
+    from {
+        transform: translateX(-100px);
+        width: 0;
+    }
+    to {
+        transform: translateX(0);
+        width: var(--innerMenu-width);
+    }
+}
+
+/* 메뉴 바 들어가는 에니메이션 (화면에 보이지 않는) */
+.ani-slideout {
+    animation-duration: 1s;
+    animation-name: slideout;
+    animation-fill-mode: forwards
+}
+@keyframes slideout {
+    from {
+        width: var(--innerMenu-width);
+        transform: translateX(0);
+    }
+    to {
+        width: 0px;
+        transform: translateX(-100px);
+    }
+}

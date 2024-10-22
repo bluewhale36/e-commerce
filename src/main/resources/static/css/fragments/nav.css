@@ -1,0 +1,67 @@
+/*
+
+/css/fragments/nav.css
+
+grid 의 nav 디자인 정의하는 css 파일.
+
+ */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-color);
+    border-bottom: 2px solid var(--point-color);
+    position: sticky;
+    top: 0;
+}
+
+nav > div {
+    display: flex;
+    width: fit-content;
+    margin: 0 10px;
+    align-items: center;
+}
+
+nav > div > * {
+    margin: 0 15px;
+}
+/* 메뉴 버튼, 인기, 할인 등 항목 있는 왼쪽 div. */
+nav > div:first-child {
+    float: left;
+}
+/* 검색 input 및 버튼 있는 오른쪽 div. */
+nav > div:last-child {
+    float: right;
+}
+
+/* 인기, 할인 등 a 태그. */
+nav a {
+    text-decoration: none;
+    color: var(--border-color);
+}
+
+button#btn-menu, button#btn-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    
+}
+
+button:hover {
+    transition-duration: 250ms;
+    background-color: var(--point-color);
+}
+
+input#searchtext {
+    background-color: var(--bg-color);
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+}
+
+input#searchtext:focus {
+    outline: none;
+}

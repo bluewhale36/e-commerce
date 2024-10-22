@@ -1,0 +1,29 @@
+/*
+
+/css/fragments/header.css
+
+grid 의 header 디자인 정의하는 css 파일.
+
+ */
+
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    position: relative;
+}
+
+header a {
+    text-decoration: none;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+header small {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

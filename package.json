@@ -1,0 +1,16 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+"build-css" : "sass --watch src/main/resources/static/scss:src/main/resources/static/css/screen"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "sass": "^1.79.4"
+  }
+}

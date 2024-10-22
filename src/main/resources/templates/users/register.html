@@ -1,0 +1,86 @@
+<div th:replace="~{fragments/container :: container(~{::main})}">
+    <main>
+        <link rel="stylesheet" href="/css/users/register.css" />
+        <script src="/js/register.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+        <div id="regi-container" class="mt-3 mx-auto">
+            <div id="title">
+                <h2>Join</h2>
+            </div>
+            <form class="row" id="regi-form">
+                <input type="hidden" class="visible-hidden" id="duplicate-id-checked" value="false" />
+                <input type="hidden" class="visible-hidden" id="duplicate-email-checked" value="false" />
+                <input type="hidden" class="visible-hidden" id="email-verified" value="false" />
+                <div class="col-9 mb-2 regi-info">
+                    <label for="id-text" class="form-label">ID</label>
+                    <input type="text" onchange="resetDupIdChk()" class="form-control" name="userId" id="id-text" placeholder="ID" />
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-3 mb-2 regi-info">
+                    <label for="id-dup-chk-btn" class="form-label">중복 확인</label>
+                    <button type="button" onclick="chkDuplicatedUserId(this)" id="id-dup-chk-btn" class="form-control btn btn-primary-outlined m-0 no-need-validation">
+                        중복 확인
+                    </button>
+                </div>
+                <div class="col-12 mb-2 regi-info">
+                    <label for="pswd-text" class="form-label">비밀번호</label>
+                    <div class="input-group">
+                        <span class="input-group-text see-pswd">
+                            <img src="/img/eye-slash.svg" />
+                        </span>
+                        <input type="password" onchange="pswdChanged()" class="form-control" name="exPswd" id="pswd-text" placeholder="비밀번호" />
+                    </div>
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-12 mb-2 regi-info">
+                    <label for="pswd-chk-text" class="form-label">비밀번호 확인</label>
+                    <div class="input-group">
+                        <span class="input-group-text see-pswd">
+                            <img src="/img/eye-slash.svg" />
+                        </span>
+                        <input type="password" class="form-control" name="password" id="pswd-chk-text" placeholder="비밀번호 확인" />
+                    </div>
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-6 mb-2 regi-info">
+                    <label for="name-text" class="form-label">이름</label>
+                    <input type="text" class="form-control" name="name" id="name-text" placeholder="이름" />
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-6 mb-2 regi-info">
+                    <label for="tel-text" class="form-label">전화번호</label>
+                    <input type="tel" class="form-control" oninput="telHyphen(this)" name="tel" id="tel-text" placeholder="숫자만 입력 ex.01012345678" />
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-9 mb-2 regi-info">
+                    <label for="email-text" class="form-label">이메일</label>
+                    <input type="email" onchange="emailChanged()" class="form-control" id="email-text" name="email" placeholder="name@example.com" />
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-3 mb-2">
+                    <label for="verification-req-btn" class="form-label">인증번호전송</label>
+                    <button type="button" onclick="chkDuplicatedEmail(this)" id="verification-req-btn" class="form-control btn btn-primary-outlined m-0 no-need-validation">
+                        인증번호
+                    </button>
+                </div>
+                <div class="col-12 mb-2 row mt-0 p-0 email-verification verification-before">
+                    <div class="col-9 regi-info">
+                        <label for="verification-code-text" class="form-label">인증번호입력</label>
+                        <input type="text" class="form-control" name="verificationCode" id="verification-code-text" />
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-3">
+                        <label for="verification-confirm-btn" class="form-label">인증</label>
+                        <button type="button" onclick="verifyEmail(this)" id="verification-confirm-btn" class="form-control btn btn-primary-outlined m-0 no-need-validation">
+                            인증
+                        </button>
+                    </div>
+                </div>
+                <div class="col-12 row">
+                    <input type="submit" class="btn btn-primary-filled col no-need-validation" value="가입" />
+                    <input type="reset" class="btn btn-secondary-outlined col no-need-validation" value="초기화" />
+                </div>
+            </form>
+        </div>
+    </main>
+</div>

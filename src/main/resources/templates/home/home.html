@@ -1,0 +1,8 @@
+<div th:replace="~{fragments/container :: container(~{::main})}">
+  <main>
+    <h1>hello</h1>
+    <p th:if="${userId != null}">
+      <span th:text="${userId}"></span>
+    </p>
+  </main>
+</div>

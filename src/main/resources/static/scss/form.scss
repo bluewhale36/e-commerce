@@ -1,0 +1,243 @@
+/*
+
+    form.scss
+
+    form 태그에 관련된 요소에 대한 css 정의.
+
+    form-control : input 태그의 class.
+    form-label : input 태그에 대한 label 태그의 class.
+    input-group : span ~ input ~ label 의 그룹에 대한 class.
+    input-group-text : input-group 의 span 태그에 대한 class.
+
+*/
+
+@use 'colors' as c;
+@use 'color-functions' as cf;
+@use 'box-shadow-functions' as bsf;
+
+
+// 드래그 방지
+body {
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
+
+/*
+    form-control 의 padding, margin 정의.
+ */
+@mixin form-spacing-variants {
+    --form-padding-x: .75rem;
+    --form-padding-y: .375rem;
+}
+/*
+    form-control 의 색상 정의.
+ */
+@mixin form-color-variants($color) {
+    --form-border-color: #{c.$grey-600};
+    --form-bg-color: transparent;
+    --form-focus-border-color: #{$color};
+    --form-focus-box-shadow-color: #{bsf.get-box-shadow-color($color)};
+    --form-focus-box-shadow: #{bsf.get-box-shadow(var(--form-focus-box-shadow-color))};
+    --form-disabled-color: #{c.$grey-800};
+    --form-disabled-bg-color: #{c.$grey-500};
+    --form-disabled-border-color: #{c.$grey-800};
+}
+/*
+    form-control 의 유효성 관련 색상 정의.
+ */
+@mixin form-validation-color-variants($color) {
+    --form-border-color: #{$color};
+    --form-bg-color: transparent;
+    --form-focus-border-color: #{$color};
+    --form-focus-box-shadow-color: #{bsf.get-box-shadow-color($color)};
+    --form-focus-box-shadow: #{bsf.get-box-shadow(var(--form-focus-box-shadow-color))};
+}
+
+/*
+    form-control 중 text, password, tel, email input 정의.
+ */
+.form-control[type=text],
+.form-control[type=password],
+.form-control[type=tel],
+.form-control[type=email] {
+    @include form-spacing-variants;
+    --form-font-size: 1rem;
+    --form-line-height: 1.5;
+    --form-font-weight: 400;
+    --form-border-radius: .375rem;
+    @include form-color-variants(c.$info);
+
+    display: block;
+    width: 100%;
+    padding: var(--form-padding-y) var(--form-padding-x);
+    font-size: var(--form-font-size);
+    border-radius: var(--form-border-radius);
+    border: 1px solid var(--form-border-color);
+    line-height: var(--form-line-height);
+    font-weight: var(--form-font-weight);
+    background-color: var(--form-bg-color);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    box-sizing: border-box;
+
+    /* 클릭 했을 시 */
+    &:focus {
+        border-color: var(--form-focus-border-color);
+        outline: none;
+        box-shadow: var(--form-focus-box-shadow);
+    }
+
+    /* 비활성화 시 */
+    &:disabled {
+        color: var(--form-disabled-color);
+        background-color: var(--form-disabled-bg-color);
+        border-color: var(--form-disabled-border-color);
+    }
+}
+/* label 태그 */
+.form-label {
+    display: block;
+    margin-bottom: .25rem;
+    cursor: pointer;
+}
+
+
+/*
+    input-group-text ~ form-control ~ form-label 의 부모 div.
+ */
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.input-group-text {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid black;
+    border-right: none;
+    line-height: 1.5;
+    font-weight: normal;
+    background-color: var(--bg-color);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    box-sizing: border-box;
+
+    /*
+        .form-control 중 .input-group-text 가 있는 것
+        -> .input-group-text 제외 공간을 .form-control 이 차지해야 함.
+    */
+    + .form-control[type=text],
+    + .form-control[type=password],
+    + .form-control[type=tel],
+    + .form-control[type=email] {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        position: relative;
+
+        /*
+            다른 형제 요소를 제외한 부모 요소의 모든 공간을 차지.
+            .input-group-text 의 width 를 명시하지 않았으므로,
+            .input-group-text 가 차지하는 크기 외 공간을 전체 차지.
+         */
+        flex: 1 1 auto;
+        width: 1%;
+        min-width: 0;
+
+    }
+}
+
+.see-pswd {
+    color: c.$black;
+}
+
+/*
+    form-control 중 checkbox, radio input 정의.
+ */
+.form-control[type=checkbox],
+.form-control[type=radio] {
+    position: relative;
+    visibility: hidden;
+    cursor: pointer;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        background-color: c.$grey-200;
+        mask: url("/img/check-circle.svg");
+        mask-size: cover;
+        mask-repeat: no-repeat;
+        visibility: visible;
+    }
+    &:checked::before {
+        background-color: c.$primary;
+        mask: url("/img/check-circle-fill.svg");
+    }
+    + .form-label {
+        display: inline;
+    }
+}
+
+/*
+    form-control 중 button, submit, reset 정의.
+ */
+.form-control[type=button],
+.form-control[type=submit],
+.form-control[type=reset],
+button.form-control {
+    @include form-spacing-variants;
+    --form-font-size: 1rem;
+    --form-line-height: 1.5;
+    --form-font-weight: 400;
+    --form-border-radius: .375rem;
+    @include form-color-variants(c.$primary);
+
+    display: block;
+    width: 100%;
+    padding: var(--form-padding-y) var(--form-padding-x);
+    font-size: var(--form-font-size);
+    border-radius: var(--form-border-radius);
+    border: 1px solid var(--form-border-color);
+    line-height: var(--form-line-height);
+    font-weight: var(--form-font-weight);
+    background-color: var(--form-bg-color);
+    transition: all .15s ease-in-out;
+    box-sizing: border-box;
+}
+
+
+
+form a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-control {
+    &.is-invalid {
+        @include form-validation-color-variants(c.$danger);
+    }
+    &.is-valid {
+        @include form-validation-color-variants(c.$success);
+    }
+}
+
+.invalid-feedback {
+    display: block;
+    color: #{c.$danger};
+    margin-top: .5rem;
+    font-size: .85rem;
+}

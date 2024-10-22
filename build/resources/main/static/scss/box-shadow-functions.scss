@@ -1,0 +1,7 @@
+@function get-box-shadow-color($color) {
+  @return rgba($color, 0.35)
+}
+
+@function get-box-shadow($color) {
+  @return 0 0 1px 3px $color;
+}

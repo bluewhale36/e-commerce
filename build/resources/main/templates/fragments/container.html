@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org" th:fragment="container(content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.getToken()}">
+    <meta name="_csrf_header" th:content="${_csrf.getHeaderName()}">
+    <title>GUNCAT</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- <script src="/js/device/device.js" defer></script> -->
+    <script src="/js/form.js" defer></script>
+    <script src="/js/fragments/menuInOutAnimation.js" defer></script>
+    <link rel="stylesheet" href="/css/screen/variables.css" />
+    <link rel="stylesheet" href="/css/screen/styles.css" />
+    <link rel="stylesheet" href="/css/scroll/scroll.css" />
+    <link rel="stylesheet" href="/css/grid-template/desktop.css" id="device-template-css" />
+    <link rel="stylesheet" href="/css/screen/layout.css" />
+    <link rel="stylesheet" href="/css/screen/form.css" />
+    <link rel="stylesheet" href="/css/screen/buttons.css" />
+    <link rel="stylesheet" href="/css/screen/spacing.css" />
+    <link rel="stylesheet" href="/css/fragments/header.css" />
+    <link rel="stylesheet" href="/css/fragments/nav.css" />
+    <link rel="stylesheet" href="/css/fragments/menu.css" />
+    <link rel="stylesheet" href="/css/fragments/footer.css" />
+</head>
+<body>
+<div id="container">
+    <div th:replace="~{fragments/header}"></div>
+    <div th:replace="~{fragments/nav}"></div>
+    <div th:replace="~{fragments/menu}"></div>
+    <main th:replace="${content}"></main>
+    <div th:replace="~{fragments/footer}"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+/*
+
+/css/fragments/main.css
+
+grid 의 main 태그에 일괄적으로 적용할 디자인 정의한 css 파일.
+
+ */
+
+
+
+main {
+    padding: 10px;
+    width: 100%;
+    height: fit-content;
+}

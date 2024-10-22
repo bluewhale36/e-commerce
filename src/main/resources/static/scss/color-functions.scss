@@ -1,0 +1,34 @@
+
+
+// 주어진 색의 명도에 따라 검은색 또는 흰색 반환.
+@function contrast-color($color) {
+    $light: #ffffff;
+    $dark: #000000;
+    @if (lightness($color) > 50%) {
+        @return $dark;
+    } @else {
+        @return $light;
+    }
+}
+
+// 주어진 색에 대해, hover 시 배경 색 반환.
+@function hover-bg-color($color) {
+    @if (contrast-color($color) == #ffffff) {
+        @return darken($color, 3%);
+    } @else {
+        @return lighten($color, 3%);
+    }
+}
+
+// 주어진 색에 대해, active 시 배경 색 반환.
+@function active-bg-color($color) {
+    @if (contrast-color($color) == #ffffff) {
+        @return darken($color, 4%);
+    } @else {
+        @return lighten($color, 4%);
+    }
+}
+
+@function disabled-color($color) {
+    @return darken($color, 15%);
+}

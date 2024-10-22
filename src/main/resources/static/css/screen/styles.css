@@ -1,0 +1,18 @@
+/*
+
+/css/screen/styles.css
+
+html element 에 적용될 스타일 정의하는 css 파일.
+색상, 여백, 정렬, 크기, 폰트, 테두리 등 정의하여 일괄적인 스타일 유지 하도록 하는 목적.
+html 에 불러오는 모든 css 파일 중 두번째로 로딩해야 함.
+
+ */
+
+body {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+}

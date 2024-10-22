@@ -1,0 +1,21 @@
+@charset "UTF-8";
+/*
+
+css/screen/variables.css
+
+웹 사이트 전역에서 사용 될 css 변수 정의한 파일.
+컬러, 너비 등 정의.
+html 에 불러오는 모든 css 파일 중 가장 먼저 로딩해야 함.
+
+*/
+:root {
+  --border-color: rgb(25.5, 25.5, 25.5); /* 테두리 컬러 */
+  --bg-color: #fff; /* 배경 컬러 */
+  --text-color: #000; /* 텍스트 컬러 */
+  --point-color: rgb(203, 165, 131); /* 포인트 컬러 */
+  --cancel-color: rgb(76.5, 76.5, 76.5); /* 취소 컬러 (할인 전 가격, 솔드 아웃 등) */
+  --innerMenu-width: 10rem; /* 왼쪽 메뉴 바 너비 */
+  --border-radius: .375rem; /* border radius */
+}
+
+/*# sourceMappingURL=variables.css.map */

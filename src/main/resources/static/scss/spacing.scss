@@ -1,0 +1,141 @@
+/*
+
+  여백 관련 css.
+  margin, padding 등에 대한 클래스 정의.
+  1rem 을 기준으로, 0 ~ 3 (그리고 auto) 로 분류.
+
+*/
+
+$spacer: 1rem;
+
+$spacers: (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+);
+
+$margin: (
+  responsive: true,
+  property: margin,
+  class: m, // 클래스의 접두사. '.m' 의 형태.
+  values: map-merge($spacers, (auto: auto)) // 첫번째 매개변수는 병합할 맵의 이름. 두번째 매개변수는 병합될 맵. 병합 되는 맵은 key가 auto 이고 값이 auto이다.
+);
+// values에는 {1: 0.25rem, 2: 0.5rem, ... auto: auto} 의 map 이 대입된다.
+$margin-x: (
+  responsive: true,
+  property: (margin-right, margin-left),
+  class: mx,
+  values: map-merge($spacers, (auto: auto))
+);
+$margin-y: (
+  responsive: true,
+  property: (margin-top, margin-bottom),
+  class: my,
+  values: map-merge($spacers, (auto: auto))
+);
+$margin-top: (
+  responsive: true,
+  property: (margin-top),
+  class: mt,
+  values: map-merge($spacers, (auto: auto))
+);
+$margin-end: (
+  responsive: true,
+  property: (margin-right),
+  class: me,
+  values: map-merge($spacers, (auto: auto))
+);
+$margin-bottom: (
+  responsive: true,
+  property: (margin-bottom),
+  class: mb,
+  values: map-merge($spacers, (auto: auto))
+);
+$margin-start: (
+  responsive: true,
+  property: (margin-left),
+  class: ms,
+  values: map-merge($spacers, (auto: auto))
+);
+// Padding utilities
+$padding: (
+  responsive: true,
+  property: (padding),
+  class: p,
+  values: $spacers
+);
+$padding-x: (
+  responsive: true,
+  property: (padding-right, padding-left),
+  class: px,
+  values: $spacers
+);
+$padding-y: (
+  responsive: true,
+  property: (padding-top, padding-bottom),
+  class: py,
+  values: $spacers
+);
+$padding-top: (
+  responsive: true,
+  property: (padding-top),
+  class: pt,
+  values: $spacers
+);
+$padding-end: (
+  responsive: true,
+  property: (padding-right),
+  class: pe,
+  values: $spacers
+);
+$padding-bottom: (
+  responsive: true,
+  property: (padding-bottom),
+  class: pb,
+  values: $spacers
+);
+$padding-start: (
+  responsive: true,
+  property: (padding-left),
+  class: ps,
+  values: $spacers
+);
+$spacing-maps: (
+    values: (
+        $margin, $margin-x, $margin-y, $margin-top, $margin-end, $margin-bottom, $margin-start,
+        $padding, $padding-x, $padding-y, $padding-top, $padding-end, $padding-bottom, $padding-start
+    )
+);
+
+// spacing에 관련된 map을 다시 map으로 저장한 spacing-maps의 values 속성에 대한 리스트 호출.
+// 각각의 리스트는 one-map 변수에 매핑.
+// 첫번째 반복에서는 $margin, 두번째 반복에서는 $margin-x, 마지막 반복에서는 $padding-start 변수가 매핑된다.
+@each $one-map in map-get($spacing-maps, values) {
+
+    // $one-map 에 매핑된 map 의 values 속성을 가져온댜.
+    // 이 때, values 속성의 값은 map 이므로, 각각의 key 와 value 를 $key, $value 에 매핑.
+    // $one-map 이 $margin map 이고 첫번째 반복일 경우 $key 는 1, $value 는 0.25rem 이다.
+    // 두번째 반복일 경우 $key 는 2, $value 는 0.5rem 이며, 마지막 반복일 경우 $key 는 auto (또는 5), $value 는 auto (또는 3rem) 이다.
+    @each $key, $value in map-get($one-map, values) {
+
+        // $one-map 과 $key 에 대한 클래스 생성.
+        // $one-map 이 $margin map 이고, $key 가 1일 경우 생성되는 클래스는 .m-1 이다.
+        // $one-map 의 map 에 대한 class 속성을 가져오고, $one-map의 values 속성을 반복한 것에 대한 $key 값을 조합.
+        .#{map-get($one-map, class)}-#{$key} {
+
+            // $one-map 변수의 property 속성을 가져온다.
+            // property 속성이 리스트이므로, 각 요소를 $one-property 에 대입.
+            // $one-map 이 $margin-x 이고 첫번째 반복일 때 $one-property 는 margin-top 이며,
+            // 두번째 반복일 때는 margin-bottom 이다.
+            @each $one-property in map-get($one-map, property) {
+                // $one-property 의 속성에 대해, $value 의 값을 매핑.
+                // $one-property 가 margin-bottom 이고 $value 가 0.25rem 일 경우, margin-bottom: 0.25rem; 이다.
+                #{$one-property}: #{$value};
+            }
+        }
+        
+    }
+}

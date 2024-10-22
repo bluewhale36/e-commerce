@@ -1,0 +1,211 @@
+.btn {
+  --btn-padding-x: .375rem;
+  --btn-padding-y: .75rem;
+  --btn-margin-x: .25rem;
+  --btn-margin-y: .125rem;
+  --btn-font-size: 1rem;
+  --btn-font-weight: 400;
+  --btn-line-height: 1.5;
+  --btn-border-width: 1px;
+  --btn-border-radius: .375rem;
+  --btn-color: #000000;
+  --btn-border-color: rgba(255, 255, 255, 0);
+  --btn-bg-color: rgba(255, 255, 255, 0);
+  --btn-hover-color: var(--btn-color);
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgba(255, 255, 255, 0);
+  --btn-active-bg-color: rgba(255, 255, 255, 0);
+  --btn-disabled-color: black;
+  --btn-disabled-border-color: rgba(216.75, 216.75, 216.75, 0);
+  --btn-disabled-bg-color: rgba(216.75, 216.75, 216.75, 0);
+  display: inline-block;
+  margin: var(--btn-margin-y) var(--btn-margin-x);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  font-size: var(--btn-font-size);
+  font-weight: var(--btn-font-weight);
+  color: var(--btn-color);
+  background-color: var(--btn-bg-color);
+  border: var(--btn-border-width) solid var(--btn-border-color);
+  border-radius: var(--btn-border-radius);
+  line-height: var(--btn-line-height);
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  transition: all 0.15s ease-in-out;
+}
+.btn:hover {
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  color: var(--btn-hover-color);
+  border-color: var(--btn-hover-border-color);
+  background-color: var(--btn-hover-bg-color);
+  cursor: pointer;
+}
+.btn:active {
+  background-color: var(--btn-active-bg-color);
+  cursor: pointer;
+}
+.btn:disabled {
+  color: var(--btn-disabled-color);
+  background-color: var(--btn-disabled-bg-color);
+  border-color: var(--btn-disabled-border-color);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-primary-filled {
+  --btn-color: #000000;
+  --btn-border-color: rgb(203, 165, 131);
+  --btn-bg-color: rgb(203, 165, 131);
+  --btn-hover-color: var(--btn-color);
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(207.5204545455, 172.8238636364, 141.7795454545);
+  --btn-active-bg-color: rgb(209.0272727273, 175.4318181818, 145.3727272727);
+  --btn-disabled-color: black;
+  --btn-disabled-border-color: rgb(180.3977272727, 125.8806818182, 77.1022727273);
+  --btn-disabled-bg-color: rgb(180.3977272727, 125.8806818182, 77.1022727273);
+}
+
+.btn-primary-outlined {
+  --btn-color: rgb(203, 165, 131);
+  --btn-border-color: rgb(203, 165, 131);
+  --btn-bg-color: #fff;
+  --btn-hover-color: #000000;
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(207.5204545455, 172.8238636364, 141.7795454545);
+  --btn-active-bg-color: rgb(209.0272727273, 175.4318181818, 145.3727272727);
+  --btn-disabled-color: rgb(180.3977272727, 125.8806818182, 77.1022727273);
+  --btn-disabled-border-color: rgb(180.3977272727, 125.8806818182, 77.1022727273);
+  --btn-disabled-bg-color: rgb(216.75, 216.75, 216.75);
+}
+
+.btn-secondary-filled {
+  --btn-color: #ffffff;
+  --btn-border-color: rgb(108, 117, 125);
+  --btn-bg-color: rgb(108, 117, 125);
+  --btn-hover-color: var(--btn-color);
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(100.9081545064, 109.317167382, 116.7918454936);
+  --btn-active-bg-color: rgb(98.5442060086, 106.756223176, 114.0557939914);
+  --btn-disabled-color: rgb(216.75, 216.75, 216.75);
+  --btn-disabled-border-color: rgb(72.5407725322, 78.5858369099, 83.9592274678);
+  --btn-disabled-bg-color: rgb(72.5407725322, 78.5858369099, 83.9592274678);
+}
+
+.btn-secondary-outlined {
+  --btn-color: rgb(108, 117, 125);
+  --btn-border-color: rgb(108, 117, 125);
+  --btn-bg-color: #fff;
+  --btn-hover-color: #ffffff;
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(100.9081545064, 109.317167382, 116.7918454936);
+  --btn-active-bg-color: rgb(98.5442060086, 106.756223176, 114.0557939914);
+  --btn-disabled-color: rgb(72.5407725322, 78.5858369099, 83.9592274678);
+  --btn-disabled-border-color: rgb(72.5407725322, 78.5858369099, 83.9592274678);
+  --btn-disabled-bg-color: rgb(216.75, 216.75, 216.75);
+}
+
+.btn-success-filled {
+  --btn-color: #ffffff;
+  --btn-border-color: rgb(25, 135, 84);
+  --btn-bg-color: rgb(25, 135, 84);
+  --btn-hover-color: var(--btn-color);
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(22.609375, 122.090625, 75.9675);
+  --btn-active-bg-color: rgb(21.8125, 117.7875, 73.29);
+  --btn-disabled-color: rgb(216.75, 216.75, 216.75);
+  --btn-disabled-border-color: rgb(13.046875, 70.453125, 43.8375);
+  --btn-disabled-bg-color: rgb(13.046875, 70.453125, 43.8375);
+}
+
+.btn-success-outlined {
+  --btn-color: rgb(25, 135, 84);
+  --btn-border-color: rgb(25, 135, 84);
+  --btn-bg-color: #fff;
+  --btn-hover-color: #ffffff;
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(22.609375, 122.090625, 75.9675);
+  --btn-active-bg-color: rgb(21.8125, 117.7875, 73.29);
+  --btn-disabled-color: rgb(13.046875, 70.453125, 43.8375);
+  --btn-disabled-border-color: rgb(13.046875, 70.453125, 43.8375);
+  --btn-disabled-bg-color: rgb(216.75, 216.75, 216.75);
+}
+
+.btn-danger-filled {
+  --btn-color: #000000;
+  --btn-border-color: rgb(220, 53, 69);
+  --btn-bg-color: rgb(220, 53, 69);
+  --btn-hover-color: var(--btn-color);
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(222.2594936709, 66.0405063291, 81.0075949367);
+  --btn-active-bg-color: rgb(223.0126582278, 70.3873417722, 85.0101265823);
+  --btn-disabled-color: black;
+  --btn-disabled-border-color: rgb(167.4810126582, 29.0189873418, 42.2848101266);
+  --btn-disabled-bg-color: rgb(167.4810126582, 29.0189873418, 42.2848101266);
+}
+
+.btn-danger-outlined {
+  --btn-color: rgb(220, 53, 69);
+  --btn-border-color: rgb(220, 53, 69);
+  --btn-bg-color: #fff;
+  --btn-hover-color: #000000;
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(222.2594936709, 66.0405063291, 81.0075949367);
+  --btn-active-bg-color: rgb(223.0126582278, 70.3873417722, 85.0101265823);
+  --btn-disabled-color: rgb(167.4810126582, 29.0189873418, 42.2848101266);
+  --btn-disabled-border-color: rgb(167.4810126582, 29.0189873418, 42.2848101266);
+  --btn-disabled-bg-color: rgb(216.75, 216.75, 216.75);
+}
+
+.btn-warning-filled {
+  --btn-color: #000000;
+  --btn-border-color: rgb(255, 193, 7);
+  --btn-bg-color: rgb(255, 193, 7);
+  --btn-hover-color: var(--btn-color);
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(255, 196.825, 22.3);
+  --btn-active-bg-color: rgb(255, 198.1, 27.4);
+  --btn-disabled-color: black;
+  --btn-disabled-border-color: rgb(185.5, 139.125, 0);
+  --btn-disabled-bg-color: rgb(185.5, 139.125, 0);
+}
+
+.btn-warning-outlined {
+  --btn-color: rgb(255, 193, 7);
+  --btn-border-color: rgb(255, 193, 7);
+  --btn-bg-color: #fff;
+  --btn-hover-color: #000000;
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(255, 196.825, 22.3);
+  --btn-active-bg-color: rgb(255, 198.1, 27.4);
+  --btn-disabled-color: rgb(185.5, 139.125, 0);
+  --btn-disabled-border-color: rgb(185.5, 139.125, 0);
+  --btn-disabled-bg-color: rgb(216.75, 216.75, 216.75);
+}
+
+.btn-info-filled {
+  --btn-color: #000000;
+  --btn-border-color: rgb(29, 191, 236);
+  --btn-bg-color: rgb(29, 191, 236);
+  --btn-hover-color: var(--btn-color);
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(43.1134693878, 194.9967346939, 237.1865306122);
+  --btn-active-bg-color: rgb(47.8179591837, 196.3289795918, 237.5820408163);
+  --btn-disabled-color: black;
+  --btn-disabled-border-color: rgb(14.6183673469, 139.2591836735, 173.8816326531);
+  --btn-disabled-bg-color: rgb(14.6183673469, 139.2591836735, 173.8816326531);
+}
+
+.btn-info-outlined {
+  --btn-color: rgb(29, 191, 236);
+  --btn-border-color: rgb(29, 191, 236);
+  --btn-bg-color: #fff;
+  --btn-hover-color: #000000;
+  --btn-hover-border-color: var(--btn-border-color);
+  --btn-hover-bg-color: rgb(43.1134693878, 194.9967346939, 237.1865306122);
+  --btn-active-bg-color: rgb(47.8179591837, 196.3289795918, 237.5820408163);
+  --btn-disabled-color: rgb(14.6183673469, 139.2591836735, 173.8816326531);
+  --btn-disabled-border-color: rgb(14.6183673469, 139.2591836735, 173.8816326531);
+  --btn-disabled-bg-color: rgb(216.75, 216.75, 216.75);
+}
+
+/*# sourceMappingURL=buttons.css.map */

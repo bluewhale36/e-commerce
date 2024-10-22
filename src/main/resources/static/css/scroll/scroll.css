@@ -1,0 +1,20 @@
+/*
+
+css/scroll/scroll.css
+
+웹 사이트 스크롤 디자인 정의한 css 파일.
+
+ */
+
+::-webkit-scrollbar{
+    width: 12px;
+}
+::-webkit-scrollbar-track{
+    width: 12px;
+}
+::-webkit-scrollbar-thumb{
+    width: 12px;
+    border: 3.5px solid var(--back-g-c);
+    border-radius: 15px;
+    background-color: #888888;
+}

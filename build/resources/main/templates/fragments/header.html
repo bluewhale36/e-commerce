@@ -1,0 +1,13 @@
+<header>
+    <a href="/users/login">
+        <small class="m-3">
+            <span th:if="${session.sessionLoginDTO != null}">
+                <span th:text="${session.sessionLoginDTO.name() + '님 환영합니다!'}"></span>
+            </span>
+            <span th:unless="${session.sessionLoginDTO != null}">
+                Login
+            </span>
+        </small>
+    </a>
+    <a href="/"><h1>Mall</h1></a>
+</header>
