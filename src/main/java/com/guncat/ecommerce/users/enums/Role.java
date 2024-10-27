@@ -16,12 +16,6 @@ public enum Role {
     }
 
     public GrantedAuthority getGrantedAuthority() {
-        return new GrantedAuthority() {
-
-            @Override
-            public String getAuthority() {
-                return name();
-            }
-        };
+        return this::name;
     }
 }
