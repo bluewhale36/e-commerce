@@ -8,6 +8,8 @@ import com.guncat.ecommerce.verification.dto.SessionVerificationDTO;
 import com.guncat.ecommerce.verification.exception.CodeNotMatchException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,6 +85,15 @@ public class UsersRestController {
     @PostMapping("/dup/email")
     public Long chkDuplicatedEmail(@RequestParam String email) {
         return usersService.chkDuplicatedEmail(email);
+    }
+
+    /**
+     * {@link DuplicatedInfoException} 처리기.
+     * @param e {@link DuplicatedInfoException} 객체.
+     */
+    @ExceptionHandler(DuplicatedInfoException.class)
+    public ResponseEntity<String> handleDuplicatedInfoException(DuplicatedInfoException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
 }
