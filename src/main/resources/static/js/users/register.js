@@ -53,7 +53,7 @@ $('form#regi-form').validate({
             maxlength: 16,
             regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z]{1}[a-zA-Z\d\!\@\*\?\~]{7,15}$/
         },
-        pswd: {
+        password: {
             required: true,
             isPswdEqual: true
         },
@@ -92,9 +92,9 @@ $('form#regi-form').validate({
             maxlength: "8글자 이상, 16글자 이하로 입력해야 합니다.",
             regex: "영어 대문자와 소문자, 숫자를 각각 포함해야 합니다. 특수문자는 선택이며, 영어로 시작해야 합니다."
         },
-        pswd: {
+        password: {
             required: "비밀번호를 다시 입력하세요.",
-            isEqual: "비밀번호가 맞지 않습니다."
+            isPswdEqual: "비밀번호가 맞지 않습니다."
         },
         email: {
             required: "이메일을 입력하세요.",
