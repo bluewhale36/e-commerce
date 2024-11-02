@@ -73,7 +73,7 @@ public class VerificationRestController {
                 session.setMaxInactiveInterval(5 * 60);
                 return true;
             } else {
-                throw new CodeNotMatchException("일치하지 않습니다.");
+                throw new CodeNotMatchException("인증 코드가 일치하지 않습니다.");
             }
         } else {
             throw new VerificationInfoNotFoundException("인증 정보를 찾을 수 없습니다.");
