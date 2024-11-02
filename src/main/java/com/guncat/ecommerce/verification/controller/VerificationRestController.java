@@ -3,14 +3,14 @@ package com.guncat.ecommerce.verification.controller;
 import com.guncat.ecommerce.verification.dto.EmailDTO;
 import com.guncat.ecommerce.verification.dto.SessionVerificationDTO;
 import com.guncat.ecommerce.verification.exception.CodeNotMatchException;
+import com.guncat.ecommerce.verification.exception.MailNotSentException;
 import com.guncat.ecommerce.verification.exception.VerificationInfoNotFoundException;
 import com.guncat.ecommerce.verification.service.IF_VerificationService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Email 인증 관련 request 를 처리하는 Rest Controller Class.
@@ -73,11 +73,30 @@ public class VerificationRestController {
                 session.setMaxInactiveInterval(5 * 60);
                 return true;
             } else {
-                throw new CodeNotMatchException("일치하지 않습니다.");
+                throw new CodeNotMatchException("인증 코드가 일치하지 않습니다.");
             }
         } else {
             throw new VerificationInfoNotFoundException("인증 정보를 찾을 수 없습니다.");
         }
+    }
+
+
+    /**
+     * 이메일을 전송하지 못한 경우 발생되는 예외에 대한 핸들러.
+     * @param e {@link MailNotSentException} 객체.
+     */
+    @ExceptionHandler(MailNotSentException.class)
+    public ResponseEntity<String> handleMailNotSentException(MailNotSentException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
+
+    /**
+     * 이메일 인증 정보를 세션에서 찾을 수 없는 경우 발생되는 예외에 대한 핸들러.
+     * @param e {@link VerificationInfoNotFoundException} 객체.
+     */
+    @ExceptionHandler(VerificationInfoNotFoundException.class)
+    public ResponseEntity<String> handleVerificationInfoNotFoundException(VerificationInfoNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
 }

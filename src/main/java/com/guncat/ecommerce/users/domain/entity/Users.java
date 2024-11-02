@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @ToString
+@EqualsAndHashCode
 @Builder
 @Table(name = "users")
 public class Users {

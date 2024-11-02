@@ -39,9 +39,15 @@ public class UsersService_Impl implements IF_UsersService {
         TelVO telVO = new TelVO(registerDTO.getTel());
         EmailVO emailVO = new EmailVO(registerDTO.getEmail());
 
+        // 중복되는 user_code 의 존재 여부 확인
+        String newUserCode = UUID.randomUUID().toString();
+        while(usersRepository.existsById(newUserCode)) {
+            newUserCode = UUID.randomUUID().toString();
+        }
+
         // 회원 Entity Build.
         Users user = Users.builder()
-                .userCode(UUID.randomUUID().toString())
+                .userCode(newUserCode)
                 .userId(userIdVO.userId())
                 .password(passwordEncoder.encode(passwordVO.password()))
                 .name(registerDTO.getName())
@@ -63,7 +69,6 @@ public class UsersService_Impl implements IF_UsersService {
 
         // 회원 권한 정보 INSERT
         usersRoleRepository.save(usersRole);
-
     }
 
     @Override
@@ -90,7 +95,7 @@ public class UsersService_Impl implements IF_UsersService {
          */
         if (authentication != null && authentication.isAuthenticated()) {
 
-            // Authentication 객체 내부 정보 중 인증된 사용자의 주체(사용자, principal)을 가져옴.
+            // Authentication 객체 내부 정보 중 인증된 사용자의 주체(사용자, Principal)을 가져옴.
             Object obj = authentication.getPrincipal();
 
             /*
