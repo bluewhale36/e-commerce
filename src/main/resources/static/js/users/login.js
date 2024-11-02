@@ -9,12 +9,10 @@ $('#login-form').validate({
      */
     rules: {
         userId: {
-            required: true,
-            maxlength: 13
+            required: true
         },
-        pswd: {
-            required: true,
-            maxlength: 16
+        password: {
+            required: true
         }
     },
 
@@ -25,12 +23,10 @@ $('#login-form').validate({
      */
     messages: {
         userId: {
-            required: 'Please enter user id',
-            maxlength: 'Under 13 Characters'
+            required: '아이디를 입력하세요.'
         },
-        pswd: {
-            required: 'Please enter password',
-            maxlength: 'Under 16 Characters'
+        password: {
+            required: '비밀번호를 입력하세요.'
         }
     },
 
