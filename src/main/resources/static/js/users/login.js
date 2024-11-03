@@ -86,25 +86,23 @@ $('#login-form').validate({
         @param form : submit 대상 form element.
      */
     submitHandler: function (form) {
-        const formData = new FormData(form);
-        const csrfHeader = $("meta[name='_csrf_header']").attr("content");
-        const csrfToken = $("meta[name='_csrf']").attr("content");
-        $.ajax({
-            url: '/users/login',
-            method: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            },
-            success: function() {
-                location.href="/";
-            },
-            error: function(xhr) {
-                alert(xhr.responseText);
-            }
-        });
+        // const formData = new FormData(form);
+        // const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        // const csrfToken = $("meta[name='_csrf']").attr("content");
+        // $.ajax({
+        //     url: '/users/login',
+        //     method: 'POST',
+        //     data: formData,
+        //     contentType: false,
+        //     processData: false,
+        //     beforeSend: function(xhr) {
+        //         xhr.setRequestHeader(csrfHeader, csrfToken);
+        //     },
+        //     error: function(xhr) {
+        //         alert(xhr.responseText);
+        //     }
+        // });
+        form.submit();
     }
 });
 

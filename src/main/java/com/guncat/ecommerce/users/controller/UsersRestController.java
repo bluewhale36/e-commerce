@@ -1,6 +1,5 @@
 package com.guncat.ecommerce.users.controller;
 
-import com.guncat.ecommerce.users.dto.LoginDTO;
 import com.guncat.ecommerce.users.dto.RegisterDTO;
 import com.guncat.ecommerce.users.exception.DuplicatedInfoException;
 import com.guncat.ecommerce.users.service.IF_UsersService;
@@ -22,16 +21,6 @@ import org.springframework.web.bind.annotation.*;
 public class UsersRestController {
 
     private final IF_UsersService usersService;
-    private final UserDetailsService userDetailsService;
-
-    /**
-     * 사용자 로그인 요청.
-     * @param loginDTO 로그인 정보 객체.
-     */
-    @PostMapping("/login")
-    public void login(@ModelAttribute LoginDTO loginDTO) {
-        userDetailsService.loadUserByUsername(loginDTO.getUserId());
-    }
 
     /**
      * 사용자의 최종 회원 가입 요청.<br/>
