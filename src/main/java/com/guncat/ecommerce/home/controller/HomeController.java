@@ -11,15 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final IF_HomeService homeService;
-    private final IF_UsersService usersService;
 
 
     @GetMapping("/")
-    public String home(Model model) {
-        String userId = usersService.getCurrentUserId();
-        model.addAttribute("userId", userId);
+    public String home() {
         return "home/home";
+    }
+
+    @GetMapping("/other")
+    public String other() {
+        return "home/otherHome";
     }
 
 }

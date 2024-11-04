@@ -83,6 +83,10 @@ $('#login-form').validate({
      */
     submitHandler: function (form) {
         const formData = new FormData(form);
+
+        /*
+            Spring Security 의 CSRF 보호에 의해, CSRF Token 을 함께 전송해야 한다.
+         */
         const csrfHeader = $("meta[name='_csrf_header']").attr("content");
         const csrfToken = $("meta[name='_csrf']").attr("content");
         $.ajax({
@@ -92,13 +96,24 @@ $('#login-form').validate({
             contentType: false,
             processData: false,
             beforeSend: function(xhr) {
+                /*
+                    Header 에 CSRF Token 값 전달.
+                 */
                 xhr.setRequestHeader(csrfHeader, csrfToken);
             },
-            success: function() {
-                location.href="/";
+            success: function(result) {
+                /*
+                    result 는 CustomAuthenticationSuccessHandler 에서 반환된 이전 접속 페이지 경로이다.
+                 */
+                location.href = result;
             },
             error: function(xhr) {
-                alert(xhr.responseText);
+                /*
+                    xhr 의 responseJSON 은 CustomAuthenticationFailureHandler 에서
+                    OutputStream 으로 작성된 ObjectMapper 이다.
+                    message : 에러 메시지, status : HTTP STATUS CODE
+                 */
+                alert(xhr.responseJSON.message);
             }
         });
     }
