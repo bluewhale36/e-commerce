@@ -1,5 +1,6 @@
 package com.guncat.ecommerce.security.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guncat.ecommerce.security.enums.CustomAuthenticationExceptions;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 로그인 실패 시 실행되는 Handler.<br/>
@@ -31,14 +35,28 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                                         AuthenticationException e) throws IOException {
         System.out.println("CustomAuthenticationFailureHandler#onAuthenticationFailure");
 
-        // 발생한 예외와 동일한 이름의 Custom Enum 객체 반환.
-        CustomAuthenticationExceptions customE = getEnumByException(e);
+        e.printStackTrace();
 
-        // 예외 출력.
-        res.setStatus(customE.getStatusCode());
-        PrintWriter out = res.getWriter();
-        out.write(customE.getMessage());
-        out.flush();
+        writePrintErrorResponse(res, e);
+    }
+
+    private void writePrintErrorResponse(HttpServletResponse res, AuthenticationException e) {
+        try {
+            ObjectMapper objMapper = new ObjectMapper();
+            Map<String, Object> responseMap = new HashMap<>();
+
+            CustomAuthenticationExceptions customE = getEnumByException(e);
+
+            responseMap.put("status", customE.getStatusCode());
+            responseMap.put("message", customE.getMessage());
+
+            res.setContentType("application/json");
+            res.setStatus(customE.getStatusCode());
+            res.setCharacterEncoding(StandardCharsets.UTF_8.name());
+            res.getWriter().write(objMapper.writeValueAsString(responseMap));
+        } catch (IOException ioE) {
+            ioE.printStackTrace();
+        }
     }
 
     /**

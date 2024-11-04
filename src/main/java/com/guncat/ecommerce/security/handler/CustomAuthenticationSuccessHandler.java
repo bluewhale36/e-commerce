@@ -68,7 +68,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         }
 
         // 리다이렉트 작업 수행.
-        res.sendRedirect(redirectUri);
+        res.getWriter().write(redirectUri);
     }
 
 }
