@@ -1,5 +1,10 @@
 package com.guncat.ecommerce.users.domain.vo;
 
+/**
+ * 아이디 값 저장의 VO Record Class.<br/>
+ * 아이디 값의 유효성을 판단한다.
+ * @param userId 아이디 문자열
+ */
 public record UserIdVO(String userId) {
 
     public UserIdVO(String userId) {

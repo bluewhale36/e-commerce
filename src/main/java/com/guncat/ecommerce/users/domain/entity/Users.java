@@ -9,6 +9,10 @@ import lombok.*;
 
 import java.util.List;
 
+/**
+ * 사용자 정보 저장의 Entity Class.<br/>
+ * users Table 과 데이터를 교환한다.
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

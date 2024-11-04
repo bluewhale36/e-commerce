@@ -17,6 +17,18 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+/**
+ * Spring Security 의 설정을 정의하는 Configuration Class.<br/>
+ * Spring Security 5.X 버전부터 {@link SecurityFilterChain} 방식의 설정 권장.
+ *
+ * @see SecurityFilterChain
+ * @see AuthenticationManager
+ * @see com.guncat.ecommerce.security.handler.CustomAuthenticationSuccessHandler
+ * @see com.guncat.ecommerce.security.handler.CustomAuthenticationFailureHandler
+ * @see com.guncat.ecommerce.security.provider.CustomProvider
+ * @see com.guncat.ecommerce.security.service.UserDetailsService_Impl
+ * @see com.guncat.ecommerce.security.domain.UserDetails_Impl
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -30,6 +42,11 @@ public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
 
+    /**
+     * Spring Security 의 {@link SecurityFilterChain} 구현체 Build.<br/>
+     * 기본적으로 적용할 보안 설정, 경로 별 인증 및 인가에 따른 접근 허가 여부, 로그인 방식 및 과정, 자동 로그인 속성 정의.<br/>
+     * Spring Security 5.X 버전부터 Method Chaining 방식을 권장.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -57,6 +74,13 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Custom 한 Provider 의 사용 여부 설정.
+     *
+     * @param authenticationConfiguration
+     * @return
+     * @throws Exception
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         AuthenticationManager authenticationManager = authenticationConfiguration.getAuthenticationManager();

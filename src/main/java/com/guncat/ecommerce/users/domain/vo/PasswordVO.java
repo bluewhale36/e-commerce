@@ -1,5 +1,10 @@
 package com.guncat.ecommerce.users.domain.vo;
 
+/**
+ * 비밀번호 값 저장의 VO Record Class.<br/>
+ * 비밀번호 값의 유효성을 판단한다.
+ * @param password 비밀번호 문자열
+ */
 public record PasswordVO(String password) {
 
     public PasswordVO(String password) {
