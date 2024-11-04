@@ -4,6 +4,10 @@ import com.guncat.ecommerce.users.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * 사용자 권한 정보 저장의 Entity Class.<br/>
+ * users_role Table 과 데이터를 교환한다.
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

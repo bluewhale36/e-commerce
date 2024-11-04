@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+/**
+ * 사용자 관련 비즈니스 로직 정의한 Service Layer.
+ */
 @Service
 @RequiredArgsConstructor
 public class UsersService_Impl implements IF_UsersService {

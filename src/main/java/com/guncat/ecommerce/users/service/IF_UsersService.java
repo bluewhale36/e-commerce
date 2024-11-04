@@ -4,6 +4,9 @@ import com.guncat.ecommerce.security.domain.UserDetails_Impl;
 import com.guncat.ecommerce.users.dto.RegisterDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * 사용자 관련 Service Layer 의 method 정의.
+ */
 public interface IF_UsersService {
 
     /**
@@ -31,7 +34,9 @@ public interface IF_UsersService {
      * @return 로그인한 사용자가 있을 경우 {@link UserDetails_Impl#getUsername()} 값. 로그인한 사용자가 없을 경우 {@code null} 반환.
      * @see UserDetails_Impl
      * @see UserDetails
+     * @deprecated {@code Thymeleaf} 의 {@link org.springframework.security.core.context.SecurityContextHolder} 객체 접근 방법 연구 중.
      */
+    @Deprecated
     public String getCurrentUserId();
 
 }

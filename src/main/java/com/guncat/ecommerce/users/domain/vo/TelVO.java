@@ -1,7 +1,9 @@
 package com.guncat.ecommerce.users.domain.vo;
 
 /**
- * 전화번호 유효성 검증하는 VO Class.
+ * 전화번호 값 저장의 VO Record Class.<br/>
+ * 전화번호 값의 유효성을 판단한다.
+ * @param tel 전화번호 문자열
  */
 public record TelVO(String tel) {
 

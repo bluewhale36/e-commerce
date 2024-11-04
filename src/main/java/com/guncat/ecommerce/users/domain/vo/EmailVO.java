@@ -1,5 +1,10 @@
 package com.guncat.ecommerce.users.domain.vo;
 
+/**
+ * 이메일 값 저장의 VO Record Class.<br/>
+ * 이메일 값의 유효성을 판단한다.
+ * @param email 이메일 문자열
+ */
 public record EmailVO(String email) {
 
     public EmailVO(String email) {

@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+/**
+ * 회원 가입 시 사용되는 데이터 정의한 DTO Class.
+ */
 @Getter
 @RequiredArgsConstructor
 @ToString

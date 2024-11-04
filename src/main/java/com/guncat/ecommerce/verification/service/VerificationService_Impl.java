@@ -11,6 +11,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+/**
+ * 메일 발송 관련 비즈니스 로직을 정의한 Service Layer.
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
