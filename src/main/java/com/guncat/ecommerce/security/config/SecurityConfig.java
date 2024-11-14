@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 /**
  * Spring Security 의 설정을 정의하는 Configuration Class.<br/>
@@ -41,6 +42,8 @@ public class SecurityConfig {
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
 
     private final AuthenticationProvider authenticationProvider;
+
+    private final PersistentTokenRepository persistentTokenRepository;
 
     /**
      * Spring Security 의 {@link SecurityFilterChain} 구현체 Build.<br/>
@@ -69,7 +72,8 @@ public class SecurityConfig {
                         .rememberMeParameter("rememberMe")
                         .tokenValiditySeconds(7 * 24 * 60 * 60)
                         .alwaysRemember(false)
-                        .userDetailsService(userDetailsService));
+                        .userDetailsService(userDetailsService)
+                        .tokenRepository(persistentTokenRepository));
 
         return http.build();
     }
