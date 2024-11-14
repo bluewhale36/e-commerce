@@ -1,8 +1,10 @@
-<div th:replace="~{fragments/container :: container(~{::main})}">
+<div th:replace="~{fragments/container :: container(~{::main})}" xmlns:sec="http://www.w3.org/1999/xhtml">
   <main>
     <h1>hello</h1>
-    <p th:if="${userId != null}">
-      <span th:text="${userId}"></span>
-    </p>
+    <div sec:authorize="isAuthenticated()">
+      Credential
+      <span th:text="${#authentication.getCredentials()}"></span>
+      <span th:text="${#authentication.getPrincipal()}"></span>
+    </div>
   </main>
 </div>
