@@ -19,4 +19,9 @@ public record PasswordVO(String password) {
         String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])[a-zA-Z]{1}[a-zA-Z\\d\\!\\@\\*\\?\\~]{7,15}$";
         return !pswd.isBlank() && pswd.matches(PASSWORD_PATTERN);
     }
+
+    @Override
+    public String toString() {
+        return "PasswordVO [password=[PROTECTED]]";
+    }
 }

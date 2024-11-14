@@ -53,4 +53,19 @@ public class Users {
     @JoinColumn(name = "role_user_code")
     private List<UsersRole> usersRole;
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Users [userCode=").append(userCode).append(", ");
+        sb.append("userId=").append(userId).append(", ");
+        sb.append("password=").append("[PROTECTED]").append(", ");
+        sb.append("name=").append(name).append(", ");
+        sb.append("tel=").append(tel).append(", ");
+        sb.append("email=").append(email).append(", ");
+        sb.append("is_enabled=").append(is_enabled).append(", ");
+        sb.append("usersRole=").append(usersRole);
+        sb.append("]");
+        return sb.toString();
+    }
+
 }
