@@ -17,7 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
 @EqualsAndHashCode
 @Builder
 @Table(name = "users")
