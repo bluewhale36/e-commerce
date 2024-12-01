@@ -52,10 +52,11 @@
         <button class="btn btn-secondary-outlined col-1" th:if="${contents.hasPrevious}" onclick="getPreviousPage(this)">Left</button>
         <button class="btn btn-secondary-outlined col-1" disabled th:unless="${contents.hasPrevious}">Left</button>
 
-        <span class="col">
+        <!-- 번호 출력 로직 수정 필요 -->
+        <span class="col row" id="span-pages">
           <th:block th:each="p : ${#numbers.sequence(1, contents.getTotalPages())}">
-            <span class="text-primary" id="span-current-page" th:if="${p == contents.currentPage + 1}" th:text="${p}"></span>
-            <span class="text-secondary" th:unless="${p == contents.currentPage + 1}" th:text="${p}"></span>
+            <span class="text-primary col" id="span-current-page" th:if="${p == contents.currentPage + 1}" th:text="${p}" onclick="goTo(this)"></span>
+            <span class="text-secondary col" th:unless="${p == contents.currentPage + 1}" th:text="${p}" onclick="goTo(this)"></span>
           </th:block>
         </span>
 

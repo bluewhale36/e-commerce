@@ -11,3 +11,8 @@ table#table-users {
 table, thead, tbody, tr, th, td {
     border: 1px solid black;
 }
+
+div#div-paging > span#span-pages > span {
+    text-align: center;
+    cursor: pointer;
+}
