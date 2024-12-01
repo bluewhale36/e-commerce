@@ -1,7 +1,11 @@
 package com.guncat.ecommerce.users.repository;
 
 import com.guncat.ecommerce.users.domain.entity.Users;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.awt.print.Pageable;
+import java.util.List;
 
 /**
  * 사용자 관련 데이터 반환을 위해 사용되는 Repository.

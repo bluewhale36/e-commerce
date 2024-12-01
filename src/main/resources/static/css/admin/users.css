@@ -1,0 +1,13 @@
+div#div-main-content {
+    width: 75%;
+    border: 1px solid black;
+}
+
+table#table-users {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, thead, tbody, tr, th, td {
+    border: 1px solid black;
+}

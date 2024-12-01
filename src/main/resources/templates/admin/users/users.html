@@ -1,0 +1,51 @@
+<div th:replace="~{/fragments/container :: container(~{::main})}">
+  <main>
+    <script src="/js/admin/users.js" defer></script>
+    <link rel="stylesheet" href="/css/admin/users.css" />
+    <h3>Admin Users page</h3>
+    <div class="mx-auto mt-3 row" id="div-main-content">
+      <div class="col-12" style="text-align: center">
+        <b>User Code</b> 를 클릭하여 사용자 상세 정보 조회
+      </div>
+      <div class="col-12 row">
+        <button class="btn btn-secondary-outlined col-1">Left</button>
+        <span class="col-2">1</span>
+        <button class="btn btn-secondary-outlined col-1" onclick="getUsers()">Right</button>
+        <span class="col-3" th:text="|총 ${users.size()} 명 조회됨|"></span>
+      </div>
+      <div class="col-12">
+        <table id="table-users" class="my-3">
+          <thead>
+          <tr>
+            <th style="width: 35%">User Code</th>
+            <th style="width: 10%">User Id</th>
+            <th style="width: 25%">Email</th>
+            <th style="width: 10%">Role</th>
+            <th style="width: 10%">Is Enabled</th>
+            <th style="width: 10%">Is Locked</th>
+          </tr>
+          </thead>
+          <tbody>
+          <th:block th:each="user : ${users}">
+            <tr th:each="role, status : ${user.roleList}">
+              <th:block th:if="${status.index == 0}">
+                <td th:rowspan="${status.size}" class="p-2">
+                  <a th:href="|/admin/users/details/${user.userCode}|" class="text-primary" th:text="${user.userCode}"></a>
+                </td>
+                <td th:rowspan="${status.size}" th:text="${user.userId}" class="p-2"></td>
+                <td th:rowspan="${status.size}" th:text="${user.email}" class="p-2"></td>
+                <td th:text="${role}" class="p-2"></td>
+                <td th:rowspan="${status.size}" th:text="${user.isEnabled}" class="p-2"></td>
+                <td th:rowspan="${status.size}" th:text="${user.isLocked}" class="p-2"></td>
+              </th:block>
+              <th:block th:unless="${status.index == 0}">
+                <td th:text="${role}" class="p-2"></td>
+              </th:block>
+            </tr>
+          </th:block>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>

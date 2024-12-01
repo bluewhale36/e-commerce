@@ -2,7 +2,11 @@ package com.guncat.ecommerce.users.service;
 
 import com.guncat.ecommerce.security.domain.UserDetails_Impl;
 import com.guncat.ecommerce.users.dto.RegisterDTO;
+import com.guncat.ecommerce.users.dto.UsersDTO;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.awt.print.Pageable;
+import java.util.List;
 
 /**
  * 사용자 관련 Service Layer 의 method 정의.
@@ -38,5 +42,11 @@ public interface IF_UsersService {
      */
     @Deprecated
     public String getCurrentUserId();
+
+    public Long getAllUsersCount();
+
+    public List<UsersDTO> getUsersByPageNum(int pageNum);
+
+    public UsersDTO getUserByUserCode(String userCode);
 
 }

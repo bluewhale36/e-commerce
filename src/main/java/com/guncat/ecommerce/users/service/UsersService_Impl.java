@@ -9,17 +9,26 @@ import com.guncat.ecommerce.users.domain.vo.PasswordVO;
 import com.guncat.ecommerce.users.domain.vo.TelVO;
 import com.guncat.ecommerce.users.domain.vo.UserIdVO;
 import com.guncat.ecommerce.users.dto.RegisterDTO;
+import com.guncat.ecommerce.users.dto.UsersDTO;
 import com.guncat.ecommerce.users.enums.Role;
+import com.guncat.ecommerce.users.mapper.UsersMapper;
 import com.guncat.ecommerce.users.repository.UsersRepository;
 import com.guncat.ecommerce.users.repository.UsersRoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 /**
  * 사용자 관련 비즈니스 로직 정의한 Service Layer.
@@ -32,6 +41,8 @@ public class UsersService_Impl implements IF_UsersService {
 
     private final UsersRepository usersRepository;
     private final UsersRoleRepository usersRoleRepository;
+
+    private final UsersMapper usersMapper;
 
     @Override
     public void register(RegisterDTO registerDTO) {
@@ -110,6 +121,35 @@ public class UsersService_Impl implements IF_UsersService {
             }
         }
         return null;
+    }
+
+    @Override
+    public Long getAllUsersCount() {
+        return usersRepository.count();
+    }
+
+    @Override
+    public List<UsersDTO> getUsersByPageNum(int pageNum) {
+        System.out.println("service");
+        System.out.println(pageNum);
+
+        Pageable pageable = PageRequest.of(pageNum, 25, Sort.by("userId"));
+        Page<Users> usersPage = usersRepository.findAll(pageable);
+
+        System.out.println(usersPage);
+        System.out.println(usersPage.getTotalElements());
+        System.out.println(usersPage.getTotalPages());
+        System.out.println(usersPage.getContent());
+        System.out.println(usersPage.getContent());
+
+        return usersMapper.toDTOs(usersPage.getContent());
+    }
+
+    @Override
+    public UsersDTO getUserByUserCode(String userCode) {
+        return usersMapper.toDTO(
+                usersRepository.findById(userCode).orElse(null)
+        );
     }
 
 
