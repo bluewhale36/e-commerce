@@ -1,5 +1,6 @@
 package com.guncat.ecommerce.users.service;
 
+import com.guncat.ecommerce.common.dto.PagingResponseDTO;
 import com.guncat.ecommerce.common.enums.IsEnabled;
 import com.guncat.ecommerce.common.enums.IsLocked;
 import com.guncat.ecommerce.users.domain.entity.Users;
@@ -129,11 +130,11 @@ public class UsersService_Impl implements IF_UsersService {
     }
 
     @Override
-    public List<UsersDTO> getUsersByPageNum(int pageNum) {
+    public PagingResponseDTO<List<UsersDTO>> getUsersByPageNum(int pageNum) {
         System.out.println("service");
         System.out.println(pageNum);
 
-        Pageable pageable = PageRequest.of(pageNum, 25, Sort.by("userId"));
+        Pageable pageable = PageRequest.of(pageNum, 1, Sort.by("userId"));
         Page<Users> usersPage = usersRepository.findAll(pageable);
 
         System.out.println(usersPage);
@@ -142,7 +143,13 @@ public class UsersService_Impl implements IF_UsersService {
         System.out.println(usersPage.getContent());
         System.out.println(usersPage.getContent());
 
-        return usersMapper.toDTOs(usersPage.getContent());
+        PagingResponseDTO<List<UsersDTO>> dtoPage = new PagingResponseDTO<>(
+                usersMapper.toDTOs(usersPage.getContent()), usersPage.getTotalPages(), usersPage.getNumber()
+        );
+
+        System.out.println(dtoPage);
+
+        return dtoPage;
     }
 
     @Override

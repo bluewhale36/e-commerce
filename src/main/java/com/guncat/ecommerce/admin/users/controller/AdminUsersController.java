@@ -1,6 +1,5 @@
-package com.guncat.ecommerce.admin.users;
+package com.guncat.ecommerce.admin.users.controller;
 
-import com.guncat.ecommerce.users.dto.UsersDTO;
 import com.guncat.ecommerce.users.service.IF_UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,7 @@ public class AdminUsersController {
     public String humanResourceManagement(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                           Model model) {
         System.out.println("admin users");
-        model.addAttribute("users", usersService.getUsersByPageNum(page));
+        model.addAttribute("contents", usersService.getUsersByPageNum(page));
         return "admin/users/users";
     }
 
