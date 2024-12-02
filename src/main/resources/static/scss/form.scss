@@ -220,12 +220,54 @@ button.form-control {
 }
 
 
+.form-select {
+    @include form-spacing-variants;
+    --form-font-size: 1rem;
+    --form-line-height: 1.5;
+    --form-font-weight: 400;
+    --form-border-radius: .375rem;
+    @include form-color-variants(c.$info);
+
+    display: block;
+    width: 100%;
+    padding: var(--form-padding-y) 2.25rem var(--form-padding-y) .75rem;
+    font-size: var(--form-font-size);
+    border-radius: var(--form-border-radius);
+    border: 1px solid var(--form-border-color);
+    line-height: var(--form-line-height);
+    font-weight: var(--form-font-weight);
+    appearance: none;
+    background-color: var(--form-bg-color);
+    background-image: url("/img/chevron-down.svg");
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    box-sizing: border-box;
+
+    /* 클릭 했을 시 */
+    &:focus {
+        border-color: var(--form-focus-border-color);
+        outline: none;
+        box-shadow: var(--form-focus-box-shadow);
+    }
+
+    /* 비활성화 시 */
+    &:disabled {
+        color: var(--form-disabled-color);
+        background-color: var(--form-disabled-bg-color);
+        border-color: var(--form-disabled-border-color);
+    }
+}
+
 
 form a {
     text-decoration: none;
     cursor: pointer;
 }
 
+/*
+    form 요소의 유효성
+ */
 .form-control {
     &.is-invalid {
         @include form-validation-color-variants(c.$danger);

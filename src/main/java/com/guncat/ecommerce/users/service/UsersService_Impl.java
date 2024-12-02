@@ -11,6 +11,7 @@ import com.guncat.ecommerce.users.domain.vo.TelVO;
 import com.guncat.ecommerce.users.domain.vo.UserIdVO;
 import com.guncat.ecommerce.users.dto.RegisterDTO;
 import com.guncat.ecommerce.users.dto.UsersDTO;
+import com.guncat.ecommerce.users.dto.UsersPagingRequestDTO;
 import com.guncat.ecommerce.users.enums.Role;
 import com.guncat.ecommerce.users.mapper.UsersMapper;
 import com.guncat.ecommerce.users.repository.UsersRepository;
@@ -26,10 +27,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Function;
 
 /**
  * 사용자 관련 비즈니스 로직 정의한 Service Layer.
@@ -125,26 +124,23 @@ public class UsersService_Impl implements IF_UsersService {
     }
 
     @Override
-    public Long getAllUsersCount() {
-        return usersRepository.count();
-    }
-
-    @Override
-    public PagingResponseDTO<List<UsersDTO>> getUsersByPageNum(int pageNum) {
+    public PagingResponseDTO<List<UsersDTO>> getUsersByPaging(UsersPagingRequestDTO usersPagingRequestDTO) {
         System.out.println("service");
-        System.out.println(pageNum);
 
-        Pageable pageable = PageRequest.of(pageNum, 1, Sort.by("userId"));
-        Page<Users> usersPage = usersRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(
+                usersPagingRequestDTO.getPageNum(), 1, Sort.by(usersPagingRequestDTO.getSortingType())
+        );
 
-        System.out.println(usersPage);
-        System.out.println(usersPage.getTotalElements());
-        System.out.println(usersPage.getTotalPages());
-        System.out.println(usersPage.getContent());
-        System.out.println(usersPage.getContent());
+        Page<Users> usersPage;
+        if (usersPagingRequestDTO.getSearchType().equals("email")) {
+            usersPage = usersRepository.findByEmailContaining(usersPagingRequestDTO.getSearchKeyword(), pageable);
+        } else {
+            usersPage = usersRepository.findByUserIdContaining(usersPagingRequestDTO.getSearchKeyword(), pageable);
+        }
 
         PagingResponseDTO<List<UsersDTO>> dtoPage = new PagingResponseDTO<>(
-                usersMapper.toDTOs(usersPage.getContent()), usersPage.getTotalPages(), usersPage.getNumber()
+                usersMapper.toDTOs(usersPage.getContent()), usersPage.getTotalPages(), usersPage.getNumber(),
+                usersPagingRequestDTO.getSearchType(), usersPagingRequestDTO.getSearchKeyword(), usersPagingRequestDTO.getSortingType()
         );
 
         System.out.println(dtoPage);

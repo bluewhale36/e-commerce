@@ -4,9 +4,9 @@ import com.guncat.ecommerce.common.dto.PagingResponseDTO;
 import com.guncat.ecommerce.security.domain.UserDetails_Impl;
 import com.guncat.ecommerce.users.dto.RegisterDTO;
 import com.guncat.ecommerce.users.dto.UsersDTO;
+import com.guncat.ecommerce.users.dto.UsersPagingRequestDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 /**
@@ -44,9 +44,7 @@ public interface IF_UsersService {
     @Deprecated
     public String getCurrentUserId();
 
-    public Long getAllUsersCount();
-
-    public PagingResponseDTO<List<UsersDTO>> getUsersByPageNum(int pageNum);
+    public PagingResponseDTO<List<UsersDTO>> getUsersByPaging(UsersPagingRequestDTO usersPagingRequestDTO);
 
     public UsersDTO getUserByUserCode(String userCode);
 
