@@ -1,0 +1,8 @@
+@use 'colors' as c;
+@use 'color-functions' as cf;
+
+@each $key, $value in c.$theme-color-variants {
+  .text-#{$key} {
+    color: $value;
+  }
+}

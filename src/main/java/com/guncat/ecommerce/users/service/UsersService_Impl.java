@@ -1,5 +1,6 @@
 package com.guncat.ecommerce.users.service;
 
+import com.guncat.ecommerce.common.dto.PagingResponseDTO;
 import com.guncat.ecommerce.common.enums.IsEnabled;
 import com.guncat.ecommerce.common.enums.IsLocked;
 import com.guncat.ecommerce.users.domain.entity.Users;
@@ -9,16 +10,24 @@ import com.guncat.ecommerce.users.domain.vo.PasswordVO;
 import com.guncat.ecommerce.users.domain.vo.TelVO;
 import com.guncat.ecommerce.users.domain.vo.UserIdVO;
 import com.guncat.ecommerce.users.dto.RegisterDTO;
+import com.guncat.ecommerce.users.dto.UsersDTO;
+import com.guncat.ecommerce.users.dto.UsersPagingRequestDTO;
 import com.guncat.ecommerce.users.enums.Role;
+import com.guncat.ecommerce.users.mapper.UsersMapper;
 import com.guncat.ecommerce.users.repository.UsersRepository;
 import com.guncat.ecommerce.users.repository.UsersRoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -32,6 +41,8 @@ public class UsersService_Impl implements IF_UsersService {
 
     private final UsersRepository usersRepository;
     private final UsersRoleRepository usersRoleRepository;
+
+    private final UsersMapper usersMapper;
 
     @Override
     public void register(RegisterDTO registerDTO) {
@@ -110,6 +121,38 @@ public class UsersService_Impl implements IF_UsersService {
             }
         }
         return null;
+    }
+
+    @Override
+    public PagingResponseDTO<List<UsersDTO>> getUsersByPaging(UsersPagingRequestDTO usersPagingRequestDTO) {
+        System.out.println("service");
+
+        Pageable pageable = PageRequest.of(
+                usersPagingRequestDTO.getPageNum(), 25, Sort.by(usersPagingRequestDTO.getSortingType())
+        );
+
+        Page<Users> usersPage;
+        if (usersPagingRequestDTO.getSearchType().equals("email")) {
+            usersPage = usersRepository.findByEmailContaining(usersPagingRequestDTO.getSearchKeyword(), pageable);
+        } else {
+            usersPage = usersRepository.findByUserIdContaining(usersPagingRequestDTO.getSearchKeyword(), pageable);
+        }
+
+        PagingResponseDTO<List<UsersDTO>> dtoPage = new PagingResponseDTO<>(
+                usersMapper.toDTOs(usersPage.getContent()), usersPage.getTotalPages(), usersPage.getNumber(),
+                usersPagingRequestDTO.getSearchType(), usersPagingRequestDTO.getSearchKeyword(), usersPagingRequestDTO.getSortingType()
+        );
+
+        System.out.println(dtoPage);
+
+        return dtoPage;
+    }
+
+    @Override
+    public UsersDTO getUserByUserCode(String userCode) {
+        return usersMapper.toDTO(
+                usersRepository.findById(userCode).orElse(null)
+        );
     }
 
 
