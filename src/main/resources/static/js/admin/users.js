@@ -1,46 +1,52 @@
-$(() => {submit(0)});
+$(() => {
+    submit(0);
+});
 
 const curPageElement = $('input#hidden-current-page');
-const currentPage = curPageElement.val();
 
+// 다음 페이지 이동
 function getNextPage(e) {
     $(e).attr('disabled', true);
-    submit(currentPage + 1);
+    submit(curPageElement.val() + 1);
 }
 
+// 이전 페이지 이동
 function getPreviousPage(e) {
     $(e).attr('disabled', true);
-    submit(currentPage - 1);
+    submit(curPageElement.val() - 1);
 }
 
+// 특정 페이지 번호 이동
 function goTo(e) {
     $(e).attr('disabled', true);
     submit($(e).text() -1);
 }
 
+// 새로운 검색 조회
 function getNewSearch() {
-    console.log($('#text-search-keyword').val());
     submit(0);
 }
 
+// request 전송 및 반환 값 처리
 function submit(pageNum) {
     curPageElement.val(pageNum);
 
+    // CSRF token
     const csrfHeader = $("meta[name='_csrf_header']").attr("content");
     const csrfToken = $("meta[name='_csrf']").attr("content");
-    const formData = new FormData($('form#form-conditions')[0]);
-    console.log(formData);
+
+    // form data
+    // const formData = new FormData($('form#form-conditions')[0]);
+    const formData = $('form#form-conditions').serialize();
+
     $.ajax({
-        url: '/admin/users/rest',
+        url: '/admin/users/',
         type: 'GET',
-        contentType: false,
-        processData: false,
+        data: formData,
         beforeSend: function(xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken);
         },
-        data: formData,
         success: function(result) {
-            console.log("result : "+ result);
             printResult(result);
         },
         error: function() {
@@ -50,23 +56,27 @@ function submit(pageNum) {
     })
 }
 
+// 새로고침
 function re() {
     location.href = '/admin/users';
 }
 
+// 결과 출력
 function printResult(result) {
     printUsersData(result);
     printPaginationData(result);
 }
 
+// 사용자 정보 테이블에 출력
 function printUsersData(data) {
-    const tbody = $('table#table-users > tbody');
+    let tbody = $('table#table-users > tbody');
 
+    // 테이블 데이터 초기화
     tbody.html('');
 
+    // UsersPagingRequestDTO#content
     const contents = data.content;
-    console.log(data);
-    console.log(contents);
+
     for (let content of contents) {
         let roleList = content.roleList;
         let roleSize = roleList.length;
@@ -89,6 +99,38 @@ function printUsersData(data) {
     }
 }
 
+// 페이징 정보 출력
 function printPaginationData(data) {
+    const pagingLeft = $('div#div-paging-left');
+    const pagingNumber = $('span#span-pages');
+    const pagingRight = $('div#div-paging-right');
+
+    // 페이징 관련 DOM 초기화
+    pagingLeft.html('');
+    pagingNumber.html('');
+    pagingRight.html('');
+
+    // 이전 페이지 버튼
+    if (data.hasPrevious) {
+        pagingLeft.append(`<button type="button" class="btn btn-secondary-outlined col" onClick="getPreviousPage(this)">Left</button>`);
+    } else {
+        pagingLeft.append(`<button type="button" class="btn btn-secondary-outlined col" disabled>Left</button>`)
+    }
+
+    // 페이지 번호 출력 (로직 수정 필요)
+    for (let i = 0; i < data.totalPages; i++) {
+        if (i === data.currentPage) {
+            pagingNumber.append(`<span class="text-primary col" id="span-current-page" onclick="goTo(this)">${i + 1}</span>`);
+        } else {
+            pagingNumber.append(`<span class="text-secondary col" onclick="goTo(this)">${i + 1}</span>`);
+        }
+    }
+
+    // 다음 페이지 버튼
+    if (data.hasNext) {
+        pagingRight.append(`<button type="button" class="btn btn-secondary-outlined col" onclick="getNextPage(this)">Right</button>`);
+    } else {
+        pagingRight.append(`<button type="button" class="btn btn-secondary-outlined col" disabled>Right</button>`);
+    }
 
 }

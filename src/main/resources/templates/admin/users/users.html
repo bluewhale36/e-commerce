@@ -8,52 +8,34 @@
           <b>User Code</b> 를 클릭하여 사용자 상세 정보 조회
         </div>
 
+        <!-- 검색, 정렬 조건 -->
         <div id="div-conditions" class="mb-3">
-          <form action="/admin/users" method="get" class="row mb-0" id="form-conditions">
+          <form class="row mb-0" id="form-conditions">
             <div class="col-2">
-              <label for="select-search-type" class="form-label">Search Type</label>
+              <label for="select-search-type" class="form-label">검색 유형</label>
               <select id="select-search-type" class="form-select" name="searchType">
-                <th:block th:if="${contents.getSearchType() == 'email'}">
-                  <option value="userId">User Id</option>
-                  <option value="email" selected>Email</option>
-                </th:block>
-                <th:block th:if="${contents.getSearchType() == 'userId'}">
-                  <option value="userId" selected>User Id</option>
-                  <option value="email">Email</option>
-                </th:block>
+                <option value="userId" selected>User Id</option>
+                <option value="email">Email</option>
               </select>
             </div>
             <div class="col-4">
-              <label for="text-search-keyword" class="form-label">Search Keyword</label>
-              <input type="text" class="form-control" id="text-search-keyword" name="searchKeyword" placeholder="Search..."
-                     th:value="${contents.getSearchKeyword()}" />
+              <label for="text-search-keyword" class="form-label">검색</label>
+              <input type="text" class="form-control" id="text-search-keyword" name="searchKeyword" placeholder="여기에 검색..." />
             </div>
             <div class="col-2">
-              <label for="select-sorting-type" class="form-label">Sort Type</label>
+              <label for="select-sorting-type" class="form-label">정렬 유형</label>
               <select id="select-sorting-type" class="form-select" name="sortingType">
-                <th:block th:if="${contents.getSortingType() == 'email'}">
-                  <option value="userId">User Id</option>
-                  <option value="userCode">User Code</option>
-                  <option value="email" selected>Email</option>
-                </th:block>
-                <th:block th:if="${contents.getSortingType() == 'userCode'}">
-                  <option value="userId">User Id</option>
-                  <option value="userCode" selected>User Code</option>
-                  <option value="email">Email</option>
-                </th:block>
-                <th:block th:if="${contents.getSortingType() == 'userId'}">
-                  <option value="userId" selected>User Id</option>
-                  <option value="userCode">User Code</option>
-                  <option value="email">Email</option>
-                </th:block>
+                <option value="userId" selected>User Id</option>
+                <option value="userCode">User Code</option>
+                <option value="email">Email</option>
               </select>
             </div>
             <div class="col-1">
-              <input type="hidden" id="hidden-current-page" class="visible-hidden" name="pageNum" th:value="${contents.getCurrentPage()}" />
+              <input type="hidden" id="hidden-current-page" class="visible-hidden" name="pageNum" />
             </div>
             <div class="col-3 row">
-              <button type="button" class="btn btn-secondary-outlined col" onclick="getNewSearch()">Search</button>
-              <button type="button" class="btn btn-secondary-outlined col" onclick="re()">Reset</button>
+              <button type="button" class="btn btn-secondary-outlined col" onclick="getNewSearch()">검색</button>
+              <button type="button" class="btn btn-secondary-outlined col" onclick="re()">초기화</button>
             </div>
           </form>
         </div>
@@ -77,19 +59,14 @@
 
         <!-- 페이징 -->
         <div class="col-12 row mt-3 mb-1" id="div-paging">
-          <button type="button" class="btn btn-secondary-outlined col-1" th:if="${contents.hasPrevious}" onclick="getPreviousPage(this)">Left</button>
-          <button type="button" class="btn btn-secondary-outlined col-1" disabled th:unless="${contents.hasPrevious}">Left</button>
+          <!-- 이전 페이지 버튼 -->
+          <div class="col-1 row" id="div-paging-left"></div>
 
-          <!-- 번호 출력 로직 수정 필요 -->
-          <span class="col row" id="span-pages">
-            <th:block th:each="p : ${#numbers.sequence(1, contents.getTotalPages())}">
-              <span class="text-primary col" id="span-current-page" th:if="${p == contents.currentPage + 1}" th:text="${p}" onclick="goTo(this)"></span>
-              <span class="text-secondary col" th:unless="${p == contents.currentPage + 1}" th:text="${p}" onclick="goTo(this)"></span>
-            </th:block>
-          </span>
+          <!-- 페이지 번호 -->
+          <span class="col row" id="span-pages"></span>
 
-          <button type="button" class="btn btn-secondary-outlined col-1" th:if="${contents.hasNext}" onclick="getNextPage(this)">Right</button>
-          <button type="button" class="btn btn-secondary-outlined col-1" disabled th:unless="${contents.hasNext}">Right</button>
+          <!-- 다음 페이지 버튼 -->
+          <div class="col-1 row" id="div-paging-right"></div>
         </div>
 
       </div>

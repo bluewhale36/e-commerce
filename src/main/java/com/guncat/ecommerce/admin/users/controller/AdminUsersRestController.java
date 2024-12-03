@@ -19,8 +19,8 @@ public class AdminUsersRestController {
 
     private final IF_UsersService usersService;
 
-    @GetMapping("/rest")
-    public PagingResponseDTO<List<UsersDTO>> getUsersData(@ModelAttribute UsersPagingRequestDTO usersPagingRequestDTO) {
+    @GetMapping("/")
+    public PagingResponseDTO<List<UsersDTO>> getAdminUsersPagingData(@ModelAttribute UsersPagingRequestDTO usersPagingRequestDTO) {
         System.out.println("\n\nREST CONTROLLER\n\n");
         System.out.println(usersPagingRequestDTO);
         return usersService.getUsersByPaging(usersPagingRequestDTO);

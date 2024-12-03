@@ -128,7 +128,7 @@ public class UsersService_Impl implements IF_UsersService {
         System.out.println("service");
 
         Pageable pageable = PageRequest.of(
-                usersPagingRequestDTO.getPageNum(), 1, Sort.by(usersPagingRequestDTO.getSortingType())
+                usersPagingRequestDTO.getPageNum(), 25, Sort.by(usersPagingRequestDTO.getSortingType())
         );
 
         Page<Users> usersPage;
