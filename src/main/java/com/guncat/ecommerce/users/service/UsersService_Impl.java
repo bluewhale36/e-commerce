@@ -13,6 +13,7 @@ import com.guncat.ecommerce.users.dto.RegisterDTO;
 import com.guncat.ecommerce.users.dto.UsersDTO;
 import com.guncat.ecommerce.users.dto.UsersPagingRequestDTO;
 import com.guncat.ecommerce.users.enums.Role;
+import com.guncat.ecommerce.users.exception.UnknownFilterTypeException;
 import com.guncat.ecommerce.users.mapper.UsersMapper;
 import com.guncat.ecommerce.users.repository.UsersRepository;
 import com.guncat.ecommerce.users.repository.UsersRoleRepository;
@@ -27,8 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 사용자 관련 비즈니스 로직 정의한 Service Layer.
@@ -132,15 +132,29 @@ public class UsersService_Impl implements IF_UsersService {
         );
 
         Page<Users> usersPage;
-        if (usersPagingRequestDTO.getSearchType().equals("email")) {
-            usersPage = usersRepository.findByEmailContaining(usersPagingRequestDTO.getSearchKeyword(), pageable);
+
+        if (usersPagingRequestDTO.isFiltering()) {
+            String filterType = usersPagingRequestDTO.getFilterType();
+            System.out.println("\n\nFILTERING\n\n");
+            System.out.println("filterType : " + filterType);
+            usersPage = switch (filterType) {
+                case "role" ->
+                        usersRepository.findByUserIdContainingAndRoleIn(usersPagingRequestDTO.getSearchKeyword(), usersPagingRequestDTO.getFilterValue(), pageable);
+                case "isenabled" ->
+                        usersRepository.findByUserIdContainingAndIsEnabledIn(usersPagingRequestDTO.getSearchKeyword(), usersPagingRequestDTO.getFilterValue(), pageable);
+                case "islocked" ->
+                        usersRepository.findByUserIdContainingAndIsLockedIn(usersPagingRequestDTO.getSearchKeyword(), usersPagingRequestDTO.getFilterValue(), pageable);
+                default -> throw new UnknownFilterTypeException("알 수 없는 필터 유형입니다.");
+            };
+
         } else {
             usersPage = usersRepository.findByUserIdContaining(usersPagingRequestDTO.getSearchKeyword(), pageable);
         }
 
         PagingResponseDTO<List<UsersDTO>> dtoPage = new PagingResponseDTO<>(
                 usersMapper.toDTOs(usersPage.getContent()), usersPage.getTotalPages(), usersPage.getNumber(),
-                usersPagingRequestDTO.getSearchType(), usersPagingRequestDTO.getSearchKeyword(), usersPagingRequestDTO.getSortingType()
+                usersPagingRequestDTO.getSearchType(), usersPagingRequestDTO.getSearchKeyword(),
+                usersPagingRequestDTO.getFilterType(), usersPagingRequestDTO.getFilterValue(), usersPagingRequestDTO.getSortingType()
         );
 
         System.out.println(dtoPage);
