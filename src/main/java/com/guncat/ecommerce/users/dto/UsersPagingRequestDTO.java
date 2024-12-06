@@ -1,6 +1,7 @@
 package com.guncat.ecommerce.users.dto;
 
 import com.guncat.ecommerce.common.dto.AbstractPagingRequest;
+import lombok.Getter;
 import lombok.ToString;
 
 /**
@@ -10,8 +11,9 @@ import lombok.ToString;
  */
 public class UsersPagingRequestDTO extends AbstractPagingRequest {
 
-    public UsersPagingRequestDTO(Integer pageNum, String searchType, String searchKeyword, String sortingType) {
-        super(pageNum, searchType, searchKeyword, sortingType);
+    public UsersPagingRequestDTO(Integer pageNum, String searchType, String searchKeyword,
+                                 String filterType, String[] filterValue, String sortingType) {
+        super(pageNum, searchType, searchKeyword, filterType, filterValue, sortingType);
     }
 
     @Override

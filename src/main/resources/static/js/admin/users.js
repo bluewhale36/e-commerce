@@ -1,6 +1,30 @@
 $(() => {
     submit(0);
+    $('select#select-filter-type').on('change', function() {
+        controlFilters($(this));
+    });
+    controlFilters($('select#select-filter-type'));
 });
+
+function controlFilters(e) {
+    let selectedValue = $(e).val().toString();
+    console.log(selectedValue);
+
+    let optionDivs = $('div[id^=div-filter-]');
+    console.log(optionDivs);
+
+    $.each(optionDivs, function(idx, el) {
+        let id =  $(el).attr('id');
+
+        if (id.indexOf(selectedValue) !== -1) {
+            $(el).attr('class', 'col');
+            $(el).find('input').removeAttr('disabled');
+        } else {
+            $(el).attr('class', 'col hidden visible-hidden');
+            $(el).find('input').attr('disabled', true);
+        }
+    });
+}
 
 const curPageElement = $('input#hidden-current-page');
 
@@ -63,8 +87,13 @@ function re() {
 
 // 결과 출력
 function printResult(result) {
-    printUsersData(result);
-    printPaginationData(result);
+    if (result.hasContent) {
+        hasData();
+        printUsersData(result);
+        printPaginationData(result);
+    } else {
+        hasNoData();
+    }
 }
 
 // 사용자 정보 테이블에 출력
@@ -133,4 +162,16 @@ function printPaginationData(data) {
         pagingRight.append(`<button type="button" class="btn btn-secondary-outlined col" disabled>Right</button>`);
     }
 
+}
+
+// 조회 결과 있을 경우
+function hasData() {
+    $('div#div-has-data').attr('class', '');
+    $('div#div-has-no-data').attr('class', 'visible-hidden hidden row');
+}
+
+// 조회 결과 없을 경우
+function hasNoData() {
+    $('div#div-has-data').attr('class', 'visible-hidden hidden');
+    $('div#div-has-no-data').attr('class', 'row');
 }
