@@ -9,7 +9,6 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @ToString
 @EqualsAndHashCode

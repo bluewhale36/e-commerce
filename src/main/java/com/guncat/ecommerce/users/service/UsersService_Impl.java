@@ -1,14 +1,12 @@
 package com.guncat.ecommerce.users.service;
 
+import com.guncat.ecommerce.admin.users.dto.UsersDTOForAdmin;
 import com.guncat.ecommerce.common.dto.PagingResponseDTO;
 import com.guncat.ecommerce.common.enums.IsEnabled;
 import com.guncat.ecommerce.common.enums.IsLocked;
 import com.guncat.ecommerce.users.domain.entity.Users;
 import com.guncat.ecommerce.users.domain.entity.UsersRole;
-import com.guncat.ecommerce.users.domain.vo.EmailVO;
-import com.guncat.ecommerce.users.domain.vo.PasswordVO;
-import com.guncat.ecommerce.users.domain.vo.TelVO;
-import com.guncat.ecommerce.users.domain.vo.UserIdVO;
+import com.guncat.ecommerce.users.domain.vo.*;
 import com.guncat.ecommerce.users.dto.RegisterDTO;
 import com.guncat.ecommerce.users.dto.UsersDTO;
 import com.guncat.ecommerce.users.dto.UsersPagingRequestDTO;
@@ -18,6 +16,7 @@ import com.guncat.ecommerce.users.mapper.UsersMapper;
 import com.guncat.ecommerce.users.repository.UsersRepository;
 import com.guncat.ecommerce.users.repository.UsersRoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.junit.Assert;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -165,8 +164,57 @@ public class UsersService_Impl implements IF_UsersService {
     @Override
     public UsersDTO getUserByUserCode(String userCode) {
         return usersMapper.toDTO(
-                usersRepository.findById(userCode).orElse(null)
+                usersRepository.findById(userCode).orElseThrow(
+                        () -> new IllegalArgumentException("No Users Found.")
+                )
         );
+    }
+
+    @Override
+    public UsersDTOForAdmin getUserByUserCodeForAdmin(String userCode) {
+        UsersDTO usersDTO = usersMapper.toDTO(
+                usersRepository.findById(userCode).orElseThrow(
+                        () -> new IllegalArgumentException("No Users Found.")
+                )
+        );
+        return UsersDTOForAdmin.builder()
+                .usersDTO(usersDTO)
+                .roleList(Arrays.asList(Role.values()))
+                .isEnabledList(Arrays.asList(IsEnabled.values()))
+                .isLockedList(Arrays.asList(IsLocked.values()))
+                .build();
+    }
+
+    @Override
+    public void updateUserStatusInfo(UsersDTO modified) {
+
+        String userCode = modified.getUserCode();
+        UsersDTO existing = getUserByUserCode(userCode);
+
+        JudgeUsersModificationVO modificationVO = new JudgeUsersModificationVO(existing, modified);
+
+        Assert.assertFalse("Admin should not modify user's basic data.", modificationVO.isBasicDataModified());
+
+        if (modificationVO.isEnumStatusModified()) {
+            if (modificationVO.isRoleModified()) {
+                usersRoleRepository.deleteAllByUserCode(userCode);
+
+                for (Role role : modified.getRoleList()) {
+                    UsersRole ur = UsersRole.builder()
+                            .roleCode(UUID.randomUUID().toString())
+                            .userCode(userCode)
+                            .role(role)
+                            .build();
+                    usersRoleRepository.save(ur);
+                }
+            }
+            if (modificationVO.isEnabledModified()) {
+                usersRepository.updateIsEnabledByUserCode(userCode, modified.getIsEnabled());
+            }
+            if (modificationVO.isLockedModified()) {
+                usersRepository.updateIsLockedByUserCode(userCode, modified.getIsLocked());
+            }
+        }
     }
 
 

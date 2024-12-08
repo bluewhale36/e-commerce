@@ -46,7 +46,7 @@ body {
   --form-focus-box-shadow-color: rgba(29, 191, 236, 0.35);
   --form-focus-box-shadow: 0 0 1px 3px var(--form-focus-box-shadow-color);
   --form-disabled-color: #333333;
-  --form-disabled-bg-color: rgb(127.5, 127.5, 127.5);
+  --form-disabled-bg-color: #cccccc;
   --form-disabled-border-color: #333333;
   display: block;
   width: 100%;
@@ -192,7 +192,7 @@ button.form-control {
   --form-focus-box-shadow-color: rgba(203, 165, 131, 0.35);
   --form-focus-box-shadow: 0 0 1px 3px var(--form-focus-box-shadow-color);
   --form-disabled-color: #333333;
-  --form-disabled-bg-color: rgb(127.5, 127.5, 127.5);
+  --form-disabled-bg-color: #cccccc;
   --form-disabled-border-color: #333333;
   display: block;
   width: 100%;
@@ -220,7 +220,7 @@ button.form-control {
   --form-focus-box-shadow-color: rgba(29, 191, 236, 0.35);
   --form-focus-box-shadow: 0 0 1px 3px var(--form-focus-box-shadow-color);
   --form-disabled-color: #333333;
-  --form-disabled-bg-color: rgb(127.5, 127.5, 127.5);
+  --form-disabled-bg-color: #cccccc;
   --form-disabled-border-color: #333333;
   display: block;
   width: 100%;

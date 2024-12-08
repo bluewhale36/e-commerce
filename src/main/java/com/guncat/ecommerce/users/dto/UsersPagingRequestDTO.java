@@ -1,15 +1,13 @@
 package com.guncat.ecommerce.users.dto;
 
-import com.guncat.ecommerce.common.dto.AbstractPagingRequest;
-import lombok.Getter;
-import lombok.ToString;
+import com.guncat.ecommerce.common.dto.AbstractPagingRequestDTO;
 
 /**
  * 사용자 관련 데이터 조회 요청 시 사용되는 DTO 클래스.
  *
- * @see AbstractPagingRequest
+ * @see AbstractPagingRequestDTO
  */
-public class UsersPagingRequestDTO extends AbstractPagingRequest {
+public final class UsersPagingRequestDTO extends AbstractPagingRequestDTO {
 
     public UsersPagingRequestDTO(Integer pageNum, String searchType, String searchKeyword,
                                  String filterType, String[] filterValue, String sortingType) {

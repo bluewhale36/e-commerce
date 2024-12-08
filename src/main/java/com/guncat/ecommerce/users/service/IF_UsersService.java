@@ -1,5 +1,6 @@
 package com.guncat.ecommerce.users.service;
 
+import com.guncat.ecommerce.admin.users.dto.UsersDTOForAdmin;
 import com.guncat.ecommerce.common.dto.PagingResponseDTO;
 import com.guncat.ecommerce.security.domain.UserDetails_Impl;
 import com.guncat.ecommerce.users.dto.RegisterDTO;
@@ -47,5 +48,9 @@ public interface IF_UsersService {
     public PagingResponseDTO<List<UsersDTO>> getUsersByPaging(UsersPagingRequestDTO usersPagingRequestDTO);
 
     public UsersDTO getUserByUserCode(String userCode);
+
+    public UsersDTOForAdmin getUserByUserCodeForAdmin(String userCode);
+
+    public void updateUserStatusInfo(UsersDTO modified);
 
 }

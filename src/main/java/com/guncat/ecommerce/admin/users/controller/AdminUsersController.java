@@ -26,7 +26,7 @@ public class AdminUsersController {
 
     @GetMapping("/details/{userCode}")
     public String adminUsersDetails(@PathVariable("userCode") String userCode, Model model) {
-        model.addAttribute("user", usersService.getUserByUserCode(userCode));
+        model.addAttribute("user", usersService.getUserByUserCodeForAdmin(userCode));
         return "admin/users/user-details";
     }
 
