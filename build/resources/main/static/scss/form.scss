@@ -42,7 +42,7 @@ body {
     --form-focus-box-shadow-color: #{bsf.get-box-shadow-color($color)};
     --form-focus-box-shadow: #{bsf.get-box-shadow(var(--form-focus-box-shadow-color))};
     --form-disabled-color: #{c.$grey-800};
-    --form-disabled-bg-color: #{c.$grey-500};
+    --form-disabled-bg-color: #{c.$grey-200};
     --form-disabled-border-color: #{c.$grey-800};
 }
 /*

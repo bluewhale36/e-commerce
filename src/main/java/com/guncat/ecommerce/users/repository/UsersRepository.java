@@ -1,9 +1,13 @@
 package com.guncat.ecommerce.users.repository;
 
+import com.guncat.ecommerce.common.enums.IsEnabled;
+import com.guncat.ecommerce.common.enums.IsLocked;
 import com.guncat.ecommerce.users.domain.entity.Users;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 
@@ -38,5 +42,15 @@ public interface UsersRepository extends JpaRepository<Users, String> {
 
     @Query("select u from Users u, UsersRole ur where u.userCode = ur.userCode and u.userId like %:userId% and u.is_locked in :isLocked")
     Page<Users> findByUserIdContainingAndIsLockedIn(String userId, String[] isLocked, Pageable pageable);
+
+    @Query("update Users u set u.is_enabled = :isEnabled where u.userCode = :userCode")
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    void updateIsEnabledByUserCode(String userCode, IsEnabled isEnabled);
+
+    @Query("update Users u set u.is_locked = :isLocked where u.userCode = :userCode")
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    void updateIsLockedByUserCode(String userCode, IsLocked isLocked);
 
 }
