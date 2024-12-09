@@ -10,7 +10,14 @@ import lombok.Getter;
 @Getter
 public enum IsLocked {
 
-    LOCKED, UNLOCKED;
+    LOCKED("잠김"),
+    UNLOCKED("잠기지 않음");
+
+    private final String description;
+
+    IsLocked(String description) {
+        this.description = description;
+    }
 
     /**
      * {@link IsLocked} 객체를 {@code boolean} 으로 변환.

@@ -23,9 +23,9 @@
                 <label for="select-filter-type" class="form-label">필터 유형</label>
                 <select id="select-filter-type" class="form-select" name="filterType">
                   <option value="select">선택...</option>
-                  <option value="role">Role</option>
-                  <option value="isenabled">IsEnabled</option>
-                  <option value="islocked">IsLocked</option>
+                  <option value="role">권한</option>
+                  <option value="isenabled">활성화 여부</option>
+                  <option value="islocked">잠김 여부</option>
                 </select>
               </div>
             </div>
@@ -45,14 +45,14 @@
                 <th:block th:each="isEnabled : ${filter_IsEnabled}">
                   <input type="checkbox" th:id="|chk-filter-${isEnabled.name()}|" th:value="${isEnabled}"
                          class="form-control" name="filterValue" />
-                  <label th:for="|chk-filter-${isEnabled.name()}|" th:text="${isEnabled.name()}" class="form-label"></label>
+                  <label th:for="|chk-filter-${isEnabled.name()}|" th:text="${isEnabled.getDescription()}" class="form-label"></label>
                 </th:block>
               </div>
               <div id="div-filter-islocked" class="col">
                 <th:block th:each="isLocked : ${filter_IsLocked}">
                   <input type="checkbox" th:id="|chk-filter-${isLocked.name()}|" th:value="${isLocked}"
                          class="form-control" name="filterValue" />
-                  <label th:for="|chk-filter-${isLocked.name()}|" th:text="${isLocked.name()}" class="form-label"></label>
+                  <label th:for="|chk-filter-${isLocked.name()}|" th:text="${isLocked.getDescription()}" class="form-label"></label>
                 </th:block>
               </div>
             </div>
