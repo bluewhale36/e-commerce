@@ -68,10 +68,10 @@
                                 sec:authorize="hasRole('CEO')" th:with="isEnabledList=${user.getIsEnabledList()}">
                             <th:block th:each="isEnabled : ${isEnabledList}">
                                 <th:block th:if="${userDTO.getIsEnabled().equals(isEnabled)}">
-                                    <option th:value="${isEnabled}" th:text="${isEnabled.name()}" selected></option>
+                                    <option th:value="${isEnabled}" th:text="${isEnabled.getDescription()}" selected></option>
                                 </th:block>
                                 <th:block th:unless="${userDTO.getIsEnabled().equals(isEnabled)}">
-                                    <option th:value="${isEnabled}" th:text="${isEnabled.name()}"></option>
+                                    <option th:value="${isEnabled}" th:text="${isEnabled.getDescription()}"></option>
                                 </th:block>
                             </th:block>
                         </select>
@@ -84,10 +84,10 @@
                                 sec:authorize="hasRole('CEO')" th:with="isLockedList=${user.getIsLockedList()}">
                             <th:block th:each="isLocked : ${isLockedList}">
                                 <th:block th:if="${userDTO.getIsLocked().equals(isLocked)}">
-                                    <option th:value="${isLocked}" th:text="${isLocked.name()}" selected></option>
+                                    <option th:value="${isLocked}" th:text="${isLocked.getDescription()}" selected></option>
                                 </th:block>
                                 <th:block th:unless="${userDTO.getIsLocked().equals(isLocked)}">
-                                    <option th:value="${isLocked}" th:text="${isLocked.name()}"></option>
+                                    <option th:value="${isLocked}" th:text="${isLocked.getDescription()}"></option>
                                 </th:block>
                             </th:block>
                         </select>
