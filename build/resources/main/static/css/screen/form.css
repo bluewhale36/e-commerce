@@ -33,7 +33,8 @@ body {
 .form-control[type=text],
 .form-control[type=password],
 .form-control[type=tel],
-.form-control[type=email] {
+.form-control[type=email],
+.form-control[type=number] {
   --form-padding-x: .75rem;
   --form-padding-y: .375rem;
   --form-font-size: 1rem;
@@ -65,7 +66,8 @@ body {
 .form-control[type=text]:focus,
 .form-control[type=password]:focus,
 .form-control[type=tel]:focus,
-.form-control[type=email]:focus {
+.form-control[type=email]:focus,
+.form-control[type=number]:focus {
   border-color: var(--form-focus-border-color);
   outline: none;
   box-shadow: var(--form-focus-box-shadow);
@@ -73,10 +75,70 @@ body {
 .form-control[type=text]:disabled,
 .form-control[type=password]:disabled,
 .form-control[type=tel]:disabled,
-.form-control[type=email]:disabled {
+.form-control[type=email]:disabled,
+.form-control[type=number]:disabled {
   color: var(--form-disabled-color);
   background-color: var(--form-disabled-bg-color);
   border-color: var(--form-disabled-border-color);
+}
+
+/*
+    form-control 중 file input 정의.
+ */
+.form-control[type=file] {
+  --form-padding-x: .75rem;
+  --form-padding-y: .375rem;
+  --form-font-size: 1rem;
+  --form-line-height: 1.5;
+  --form-font-weight: 400;
+  --form-border-radius: .375rem;
+  --form-border-color: #666666;
+  --form-bg-color: transparent;
+  --form-focus-border-color: rgb(29, 191, 236);
+  --form-focus-box-shadow-color: rgba(29, 191, 236, 0.35);
+  --form-focus-box-shadow: 0 0 1px 3px var(--form-focus-box-shadow-color);
+  --form-disabled-color: #333333;
+  --form-disabled-bg-color: #cccccc;
+  --form-disabled-border-color: #333333;
+  display: block;
+  width: 100%;
+  padding: var(--form-padding-y) var(--form-padding-x);
+  font-size: var(--form-font-size);
+  border-radius: var(--form-border-radius);
+  border: 1px solid var(--form-border-color);
+  line-height: var(--form-line-height);
+  font-weight: var(--form-font-weight);
+  background-color: var(--form-bg-color);
+  background-clip: padding-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-sizing: border-box;
+  /* 클릭 했을 시 */
+  /* 비활성화 시 */
+}
+.form-control[type=file]:focus {
+  border-color: var(--form-focus-border-color);
+  outline: none;
+  box-shadow: var(--form-focus-box-shadow);
+}
+.form-control[type=file]:disabled {
+  color: var(--form-disabled-color);
+  background-color: var(--form-disabled-bg-color);
+  border-color: var(--form-disabled-border-color);
+}
+.form-control[type=file]:hover {
+  cursor: pointer;
+}
+.form-control[type=file]::file-selector-button {
+  padding: var(--form-padding-y) var(--form-padding-x) var(--form-padding-y) 0;
+  margin-inline-end: 1rem;
+  color: inherit;
+  background-color: inherit;
+  pointer-events: none;
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+  border-inline-end-width: var(--form-border-width);
+  border-radius: 0;
 }
 
 /* label 태그 */
@@ -259,14 +321,16 @@ form a {
 /*
     form 요소의 유효성
  */
-.form-control.is-invalid {
+.form-control.is-invalid,
+.form-select.is-invalid {
   --form-border-color: rgb(220, 53, 69);
   --form-bg-color: transparent;
   --form-focus-border-color: rgb(220, 53, 69);
   --form-focus-box-shadow-color: rgba(220, 53, 69, 0.35);
   --form-focus-box-shadow: 0 0 1px 3px var(--form-focus-box-shadow-color);
 }
-.form-control.is-valid {
+.form-control.is-valid,
+.form-select.is-valid {
   --form-border-color: rgb(25, 135, 84);
   --form-bg-color: transparent;
   --form-focus-border-color: rgb(25, 135, 84);

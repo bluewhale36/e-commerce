@@ -45,6 +45,10 @@ public interface IF_UsersService {
     @Deprecated
     public String getCurrentUserId();
 
+    public String getUserIdByUserCode(String userCode);
+
+    public String getUserCodeByUserId(String userId);
+
     public PagingResponseDTO<List<UsersDTO>> getUsersByPaging(UsersPagingRequestDTO usersPagingRequestDTO);
 
     public UsersDTO getUserByUserCode(String userCode);

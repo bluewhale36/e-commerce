@@ -1,0 +1,19 @@
+div#div-main-content {
+    width: 75%;
+    border: 1px solid black;
+}
+
+table#table-product {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, thead, tbody, tr, th, td {
+    border: 1px solid black;
+}
+
+div#div-filter-* {
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}

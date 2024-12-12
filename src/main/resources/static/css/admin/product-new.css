@@ -1,0 +1,7 @@
+div#div-formcard {
+    width: 80%;
+}
+
+div#div-formcard > div {
+    border: 1px solid black;
+}
