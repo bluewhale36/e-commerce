@@ -62,6 +62,7 @@ public class Users {
         sb.append("tel=").append(tel).append(", ");
         sb.append("email=").append(email).append(", ");
         sb.append("is_enabled=").append(is_enabled).append(", ");
+        sb.append("is_locked=").append(is_locked).append(", ");
         sb.append("usersRole=").append(usersRole);
         sb.append("]");
         return sb.toString();

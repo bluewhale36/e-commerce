@@ -83,7 +83,7 @@ public class CustomProvider implements AuthenticationProvider {
             UsernamePasswordAuthenticationToken 반환.
          */
         return new UsernamePasswordAuthenticationToken(
-                userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities()
+                userDetails, userDetails.getPassword(), userDetails.getAuthorities()
         );
     }
 

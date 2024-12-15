@@ -2,8 +2,10 @@ package com.guncat.ecommerce.security.domain;
 
 import com.guncat.ecommerce.users.domain.entity.Users;
 import com.guncat.ecommerce.users.domain.entity.UsersRole;
+import com.guncat.ecommerce.users.dto.UsersDTO;
 import com.guncat.ecommerce.users.enums.Role;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.CredentialsContainer;
@@ -17,10 +19,11 @@ import java.util.stream.Collectors;
  * Spring Security 의 {@link UserDetails} 구현체.<br/>
  * 로그인 및 Session 에서 접근해야 하는 정보를 담은 객체이다.
  */
+@Getter
 @AllArgsConstructor
 public class UserDetails_Impl implements UserDetails, CredentialsContainer {
 
-    private Users users;
+    private UsersDTO usersDTO;
 
     /**
      * 사용자의 권한을 반환하는 method.<br/>
@@ -32,20 +35,19 @@ public class UserDetails_Impl implements UserDetails, CredentialsContainer {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return users.getUsersRole().stream()
-                .map(UsersRole::getRole)
+        return usersDTO.getRoleList().stream()
                 .map(Role::getGrantedAuthority)
                 .collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return users.getPassword();
+        return usersDTO.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return users.getUserId();
+        return usersDTO.getUserId();
     }
 
     @Override
@@ -55,7 +57,7 @@ public class UserDetails_Impl implements UserDetails, CredentialsContainer {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !users.getIs_locked().toBoolean();
+        return !usersDTO.getIsLocked().toBoolean();
     }
 
     @Override
@@ -65,7 +67,7 @@ public class UserDetails_Impl implements UserDetails, CredentialsContainer {
 
     @Override
     public boolean isEnabled() {
-        return users.getIs_enabled().toBoolean();
+        return usersDTO.getIsEnabled().toBoolean();
     }
 
     /**
@@ -76,21 +78,21 @@ public class UserDetails_Impl implements UserDetails, CredentialsContainer {
      */
     @Override
     public void eraseCredentials() {
-        users = Users.builder()
-                .userCode(users.getUserCode())
-                .userId(users.getUserId())
+        usersDTO = UsersDTO.builder()
+                .userCode(usersDTO.getUserCode())
+                .userId(usersDTO.getUserId())
                 .password(null)
-                .name(users.getName())
-                .tel(users.getTel())
-                .email(users.getEmail())
-                .is_enabled(users.getIs_enabled())
-                .is_locked(users.getIs_locked())
-                .usersRole(users.getUsersRole())
+                .name(usersDTO.getName())
+                .tel(usersDTO.getTel())
+                .email(usersDTO.getEmail())
+                .isEnabled(usersDTO.getIsEnabled())
+                .isLocked(usersDTO.getIsLocked())
+                .roleList(usersDTO.getRoleList())
                 .build();
     }
 
     @Override
     public String toString() {
-        return users.toString();
+        return usersDTO.toString();
     }
 }
