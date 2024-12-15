@@ -17,6 +17,7 @@ import com.guncat.ecommerce.product.repository.ProdContRepository;
 import com.guncat.ecommerce.product.repository.ProdPicRepository;
 import com.guncat.ecommerce.product.repository.ProductRepository;
 import com.guncat.ecommerce.users.dto.UsersDTO;
+import com.guncat.ecommerce.users.exception.UnknownFilterTypeException;
 import com.guncat.ecommerce.users.service.IF_UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -108,7 +109,6 @@ public class ProductService_Impl implements IF_ProductService {
         ProductDTO productDTO = getProductByProdCode(prodCode);
         return ProductDTOForAdmin.builder()
                 .productDTO(productDTO)
-                .currentAdminUserId(usersService.getUserIdByUserCode(productDTO.getRegisteredAdminCode()))
                 .prodCategoryList(List.of(ProdCategory.values()))
                 .prodStatusList(List.of(ProdStatus.values()))
                 .isEnabledList(List.of(IsEnabled.values()))
@@ -117,14 +117,42 @@ public class ProductService_Impl implements IF_ProductService {
 
     @Override
     public PagingResponseDTO<List<ProductDTO>> getProductsByPaging(ProductPagingRequestDTO productPagingRequestDTO) {
+        /*
+            검색, 정렬, 필터 등의 조건에 더하여 페이징 조건을 사용하여 결과 조회.
+         */
         System.out.println(productPagingRequestDTO);
 
+        // JPA 페이징 객체
         Pageable pageable = PageRequest.of(
                 productPagingRequestDTO.getPageNum(), 25, Sort.by(productPagingRequestDTO.getSortingType())
         );
 
-        Page<Product> productsPage = productRepository.findAll(pageable);
+        // 조회 결과
+        Page<Product> productsPage;
 
+        if (productPagingRequestDTO.isFiltering()) {
+
+            // 필터링을 사용할 경우
+            productsPage = switch (productPagingRequestDTO.getFilterType()) {
+                case "prodstatus" -> productRepository.findByProdNameContainingAndProdStatusIn(
+                        productPagingRequestDTO.getSearchKeyword(), productPagingRequestDTO.getFilterValue(), pageable
+                );
+                case "isenabled" -> productRepository.findByProdNameContainingAndIsEnabledIn(
+                        productPagingRequestDTO.getSearchKeyword(), productPagingRequestDTO.getFilterValue(), pageable
+                );
+                case "prodcategory" -> productRepository.findByProdNameContainingAndProdCategoryIn(
+                        productPagingRequestDTO.getSearchKeyword(), productPagingRequestDTO.getFilterValue(), pageable
+                );
+                default -> throw new UnknownFilterTypeException("Unknown Filter Type");
+            };
+        } else {
+
+            // 필터링을 사용하지 않을 경우
+            productsPage = productRepository.findByProdNameContaining(productPagingRequestDTO.getSearchKeyword(), pageable);
+        }
+
+
+        // 반환 DTO 객체
         PagingResponseDTO<List<ProductDTO>> dtoPage = new PagingResponseDTO<>(
                 productMapper.toDTOs(productsPage.getContent()), productsPage.getTotalPages(), productsPage.getNumber(),
                 productPagingRequestDTO.getSearchType(), productPagingRequestDTO.getSearchKeyword(),

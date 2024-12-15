@@ -18,7 +18,6 @@ import java.util.List;
 public class ProductDTOForAdmin {
 
     private ProductDTO productDTO;
-    private String currentAdminUserId;
     private List<ProdCategory> prodCategoryList;
     private List<ProdStatus> prodStatusList;
     private List<IsEnabled> isEnabledList;

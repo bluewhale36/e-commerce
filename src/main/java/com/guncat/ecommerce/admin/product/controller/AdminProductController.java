@@ -5,6 +5,7 @@ import com.guncat.ecommerce.common.enums.IsEnabled;
 import com.guncat.ecommerce.product.enums.ProdCategory;
 import com.guncat.ecommerce.product.enums.ProdStatus;
 import com.guncat.ecommerce.product.service.IF_ProductService;
+import com.guncat.ecommerce.security.annotation.AuthenticationPrincipalUserCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -43,7 +44,11 @@ public class AdminProductController {
     }
 
     @GetMapping("/details/{prodCode}")
-    public String adminProductDetails(@PathVariable String prodCode, Model model) {
+    public String adminProductDetails(@PathVariable String prodCode,
+                                      @AuthenticationPrincipalUserCode String userCode,
+                                      Model model) {
+        System.out.println("annotation : " + userCode);
+        model.addAttribute("userCode", userCode);
         model.addAttribute("product", productService.getProductByProdCodeForAdmin(prodCode));
         return "admin/products/product-details";
     }
