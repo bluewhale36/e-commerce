@@ -90,9 +90,9 @@ public enum ProdKind {
     INN_SET("여성 속옷 세트"),
     HOMEWEAR("홈웨어");
 
-    private final String name;
+    private final String description;
 
-    ProdKind(String name) {
-        this.name = name;
+    ProdKind(String description) {
+        this.description = description;
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 
 /**
  * 사용자 관련 데이터 반환을 위해 사용되는 Repository.
@@ -31,6 +33,8 @@ public interface UsersRepository extends JpaRepository<Users, String> {
      * @return 매개변수의 이메일 문자열에 대한 Tuple 의 개수.
      */
     Long countByEmail(String email);
+
+    Optional<Users> findByUserId(String userId);
 
     Page<Users> findByUserIdContaining(String userId, Pageable pageable);
 

@@ -1,0 +1,116 @@
+<div th:replace="~{/fragments/container :: container(~{::main})}">
+    <main>
+        <link rel="stylesheet" href="/css/admin/products.css" />
+        <script src="/js/admin/products.js" defer></script>
+        <h3>Admin Products Page</h3>
+        <button type="button" class="btn btn-primary-outlined col" onclick="newProduct()">새 상품 등록</button>
+
+        <div class="mx-auto mt-3 row" id="div-main-content">
+            <div class="col-12" style="text-align: center">
+                Prod Code 를 클릭하여 상세 정보 조회
+            </div>
+
+            <!-- 검색, 정렬, 필터 조건 -->
+            <div id="div-conditions" class="mb-3">
+                <form class="row mb-0" id="form-conditions">
+                    <input type="hidden" id="hidden-current-page" class="visible-hidden" name="pageNum" />
+                    <div class="col-2" id="div-search">
+                        <div>
+                            <label for="text-search-keyword" class="form-label">검색</label>
+                            <input type="text" class="form-control" id="text-search-keyword" name="searchKeyword" placeholder="상품 명으로 검색..." />
+                        </div>
+                    </div>
+                    <div class="col-2" id="div-sorting">
+                        <div>
+                            <label for="select-sorting-type" class="form-label">정렬 유형</label>
+                            <select id="select-sorting-type" class="form-select" name="sortingType">
+                                <option value="prodName" selected>상품 명</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3 row">
+                        <input type="button" class="form-control btn btn-primary-filled col" onclick="getNewSearch()" value="검색"/>
+                        <input type="button" class="form-control btn btn-secondary-outlined col" onclick="re()" value="초기화"/>
+                    </div>
+                    <div class="col-5"></div>
+                    <div class="col-2" id="div-filter">
+                        <div>
+                            <label for="select-filter-type" class="form-label">필터 유형</label>
+                            <select id="select-filter-type" class="form-select" name="filterType">
+                                <option value="select">선택...</option>
+                                <option value="prodstatus">상품 상태</option>
+                                <option value="isenabled">활성화 여부</option>
+                                <option value="prodcategory">상품 상위 분류</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <label class="form-label">필터 값</label>
+                        <div id="div-filter-select" class="col">
+                            <span class="text-secondary">필터 유형을 선택하여 값 선택</span>
+                        </div>
+                        <div id="div-filter-prodstatus" class="col">
+                            <th:block th:each="prodStatus : ${filter_ProdStatus}">
+                                <input type="checkbox" th:id="|chk-filter-${prodStatus.name()}|" th:value="${prodStatus}"
+                                       class="form-control" name="filterValue" />
+                                <label th:for="|chk-filter-${prodStatus.name()}|" th:text="${prodStatus.getDescription()}" class="form-label"></label>
+                            </th:block>
+                        </div>
+                        <div id="div-filter-isenabled" class="col">
+                            <th:block th:each="isEnabled : ${filter_IsEnabled}">
+                                <input type="checkbox" th:id="|chk-filter-${isEnabled.name()}|" th:value="${isEnabled}"
+                                       class="form-control" name="filterValue" />
+                                <label th:for="|chk-filter-${isEnabled.name()}|" th:text="${isEnabled.getDescription()}" class="form-label"></label>
+                            </th:block>
+                        </div>
+                        <div id="div-filter-prodcategory" class="col">
+                            <th:block th:each="prodCateory : ${filter_ProdCategory}">
+                                <input type="checkbox" th:id="|chk-filter-${prodCateory.name()}|" th:value="${prodCateory}"
+                                       class="form-control" name="filterValue" />
+                                <label th:for="|chk-filter-${prodCateory.name()}|" th:text="${prodCateory.getCategoryInKorean()}" class="form-label"></label>
+                            </th:block>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- 상품 정보 렌더링 -->
+            <div class="col-12 my-0">
+                <div id="div-has-data">
+                    <table id="table-product">
+                        <thead>
+                        <tr>
+                            <th class="p-1">Product Code</th>
+                            <th class="p-1">Product Name</th>
+                            <th class="p-1">Category</th>
+                            <th class="p-1">Kind</th>
+                            <th class="p-1">Count</th>
+                            <th class="p-1">Price</th>
+                            <th class="p-1">Discount Rate</th>
+                            <th class="p-1">Status</th>
+                            <th class="p-1">Is Enabled</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="div-has-no-data" class="visible-hidden hidden row">
+                    <span class="text-secondary col" style="text-align: center">검색 결과가 없습니다.</span>
+                </div>
+            </div>
+
+            <!-- 페이징 -->
+            <div class="col-12 row mt-3 mb-1" id="div-paging">
+                <!-- 이전 페이지 버튼 -->
+                <div class="col-1 row" id="div-paging-left"></div>
+
+                <!-- 페이지 번호 -->
+                <span class="col row" id="span-pages"></span>
+
+                <!-- 다음 페이지 버튼 -->
+                <div class="col-1 row" id="div-paging-right"></div>
+            </div>
+        </div>
+    </main>
+</div>

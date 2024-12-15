@@ -123,6 +123,20 @@ public class UsersService_Impl implements IF_UsersService {
     }
 
     @Override
+    public String getUserIdByUserCode(String userCode) {
+        Users user = usersRepository.findById(userCode)
+                .orElseThrow( ()  -> new IllegalArgumentException("해당 식별 코드로 회원 정보를 찾을 수 없습니다."));
+        return user.getUserId();
+    }
+
+    @Override
+    public String getUserCodeByUserId(String userId) {
+        Users user = usersRepository.findByUserId(userId)
+                .orElseThrow( ()  -> new IllegalArgumentException("해당 아이디로 회원 정보를 찾을 수 없습니다."));
+        return user.getUserCode();
+    }
+
+    @Override
     public PagingResponseDTO<List<UsersDTO>> getUsersByPaging(UsersPagingRequestDTO usersPagingRequestDTO) {
         System.out.println("service");
 

@@ -1,9 +1,12 @@
 package com.guncat.ecommerce.product.enums;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Getter
 public enum ProdCategory {
     TOP("상의",
             Arrays.asList(
@@ -77,10 +80,6 @@ public enum ProdCategory {
     ProdCategory(String categoryInKorean, List<ProdKind> prodKindList) {
         this.categoryInKorean = categoryInKorean;
         this.prodKindList = prodKindList;
-    }
-
-    public String getCategoryInKorean() {
-        return categoryInKorean;
     }
 
     public ProdCategory findByProdKind(ProdKind prodKind) {

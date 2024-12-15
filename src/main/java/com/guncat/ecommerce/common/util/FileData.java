@@ -39,6 +39,7 @@ public class FileData {
             add(".jpeg");
             add(".gif");
             add(".html");
+            add(".pdf");
         }
     };
 
