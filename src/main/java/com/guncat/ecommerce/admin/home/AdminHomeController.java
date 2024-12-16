@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class AdminHomeController {
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = {""})
     public String home(@AuthenticationPrincipalUserCode String userCode, Model model) {
         System.out.println("annotation : " + userCode);
         model.addAttribute("userCode", userCode);

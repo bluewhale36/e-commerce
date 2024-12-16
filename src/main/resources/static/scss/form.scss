@@ -56,6 +56,29 @@ body {
     --form-focus-box-shadow: #{bsf.get-box-shadow(var(--form-focus-box-shadow-color))};
 }
 
+.form-card {
+    --form-padding-x: 1rem;
+    --form-padding-y: 1rem;
+    --form-border-color: #{c.$black};
+    --form-bg-color: transparent;
+    --form-border-width: 1px;
+    --form-font-size: 1rem;
+    --form-line-height: 1.5;
+    --form-font-weight: 400;
+    --form-border-radius: .375rem;
+
+
+    width: 100%;
+    padding: 1rem;
+    font-size: var(--form-font-size);
+    border-radius: var(--form-border-radius);
+    border: 1px solid var(--form-border-color);
+    line-height: var(--form-line-height);
+    font-weight: var(--form-font-weight);
+    background-color: var(--form-bg-color);
+    box-sizing: border-box;
+}
+
 /*
     form-control 중 text, password, tel, email input 정의.
  */
@@ -194,10 +217,7 @@ body {
         .form-control 중 .input-group-text 가 있는 것
         -> .input-group-text 제외 공간을 .form-control 이 차지해야 함.
     */
-    + .form-control[type=text],
-    + .form-control[type=password],
-    + .form-control[type=tel],
-    + .form-control[type=email] {
+    + .form-control {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
         position: relative;

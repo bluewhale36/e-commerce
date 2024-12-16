@@ -60,8 +60,10 @@ public class SecurityConfig {
                         .requestMatchers("/", "/other").permitAll()
                         .requestMatchers("/users/login", "/users/join", "/users/dup/**").permitAll()
                         .requestMatchers("/email/**").permitAll()
+                        .requestMatchers("/download").permitAll()
                         .requestMatchers("/css/**", "/scss/**","/js/**", "/img/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyRole(Role.CEO.name(), Role.STAFF.name())
+                        .requestMatchers("/admin/**").fullyAuthenticated()
                         .anyRequest().authenticated())
                 .formLogin( form -> form
                         .loginProcessingUrl("/users/login").permitAll()

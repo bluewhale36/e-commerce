@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org" th:fragment="2col(statics, left, right)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.getToken()}">
+    <meta name="_csrf_header" th:content="${_csrf.getHeaderName()}">
+    <title>GUNCAT</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- <script src="/js/device/device.js" defer></script> -->
+    <script src="/js/screen/form.js" defer></script>
+    <script src="/js/fragments/menuInOutAnimation.js" defer></script>
+    <link rel="stylesheet" href="/css/screen/variables.css" />
+    <link rel="stylesheet" href="/css/screen/styles.css" />
+    <link rel="stylesheet" href="/css/scroll/scroll.css" />
+    <link rel="stylesheet" href="/css/grid-template/desktop.css" id="device-template-css" />
+    <link rel="stylesheet" href="/css/screen/layout.css" />
+    <link rel="stylesheet" href="/css/screen/form.css" />
+    <link rel="stylesheet" href="/css/screen/buttons.css" />
+    <link rel="stylesheet" href="/css/screen/spacing.css" />
+    <link rel="stylesheet" href="/css/screen/text-style.css" />
+</head>
+<body>
+    <div class="mx-auto p-2 row" style="width: 85%">
+        <div class="hidden" th:include="${statics}"></div>
+        <div class="col-6 p-2" th:include="${left}"></div>
+        <div class="col-6 p-2 row" th:include="${right}"></div>
+    </div>
+</body>
+</html>

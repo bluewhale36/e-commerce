@@ -17,6 +17,9 @@ $.validator.addMethod("isProdCategorySelected", function() {
     return $('select#select-prod-category').val() !== 'none';
 });
 
+$.validator.addMethod("maxFiles", function(value, element, param) {
+    return element.files.length <= param;
+});
 
 /**
  * 상품 정보 form 유효성 정의.
@@ -30,11 +33,13 @@ $('form#form-product-info').validate({
         },
         prodCont: {
             required: true,
-            accept: "image/jpg,image/jpeg,image/png,image/gif,application/pdf,text/html"
+            accept: "image/jpg,image/jpeg,image/png,image/gif,application/pdf,text/html",
+            maxFiles: 3
         },
         prodPic: {
             required: true,
-            accept: "image/jpg,image/jpeg,image/png,image/png"
+            accept: "image/jpg,image/jpeg,image/png,image/png",
+            maxFiles: 7
         },
         prodCategory: {
             required: true,
@@ -66,11 +71,13 @@ $('form#form-product-info').validate({
         },
         prodCont: {
             required: "상품 상세 설명은 하나 이상의 파일이 있어야 합니다.",
-            accept: "정확한 파일 확장자를 사용해야 합니다. (.png, .jpg, .jpeg, .pdf, .html)"
+            accept: "정확한 파일 확장자를 사용해야 합니다. (.png, .jpg, .jpeg, .pdf, .html)",
+            maxFiles: "상품 상세 설명 파일은 최대 3개까지 업로드 가능합니다."
         },
         prodPic: {
             required: "상품 커버 사진은 하나 이상의 파일이 있어야 합니다.",
-            accept: "상품 커버 사진은 사진 파일 형식이어야 합니다. (.png, .jpg, .jpeg)"
+            accept: "상품 커버 사진은 사진 파일 형식이어야 합니다. (.png, .jpg, .jpeg)",
+            maxFiles: "상품 커버 사진은 최대 7개까지 업로드 가능합니다."
         },
         prodCategory: {
             required: "상품 상위 분류를 선택하세요.",
@@ -99,7 +106,7 @@ $('form#form-product-info').validate({
         $(element).valid();
     },
     errorPlacement: function (error, element) {
-        $(element).closest('div').find('.invalid-feedback').text($(error).text());
+        $(element).closest('div[class^=col-]').find('.invalid-feedback').text($(error).text());
     },
     highlight: function (element) {
         if (!$(element).hasClass('no-need-validation')) {
@@ -123,7 +130,13 @@ $(() => {
     $('select#select-prod-category').on('change', function() {
         getProdKind();
     });
-})
+    $('#file-prod-cont').on('change', function() {
+        printSelectedProdCont(this);
+    });
+    $('#file-prod-pic').on('change', function() {
+        printSelectedProdPic(this);
+    });
+});
 
 function getProdKind() {
     let prodCategory = $('select#select-prod-category').val();
@@ -146,6 +159,7 @@ function getProdKind() {
             },
             error: function(xhr, status, error) {
                 alert(xhr.responseText);
+                location.reload();
             }
         });
     } else {
@@ -169,4 +183,47 @@ function printProdKind(data) {
         $(el).append(`<option value="${key}">${value}</option>`);
     });
 
+}
+
+function printSelectedProdCont(e) {
+    const files = e.files;
+    $('div#prod-cont-preview table tbody').html('');
+    Array.from(files).forEach((file, idx) => {
+        console.log(file);
+        console.log(URL.createObjectURL(file));
+        $('div#prod-cont-preview table tbody').append(`
+            <tr>
+                <td class="p-1">${idx + 1}</td>
+                <td class="p-1">
+                    <a href="${URL.createObjectURL(file)}" class="text-primary" target="_blank">${file.name}</a>
+                </td>
+            </tr>
+        `);
+    });
+}
+
+function printSelectedProdPic(e) {
+    const files = e.files;
+    $('div#prod-pic-preview table tbody').html('');
+    Array.from(files).forEach((file, idx) => {
+        console.log(file);
+        console.log(URL.createObjectURL(file));
+        $('div#prod-pic-preview table tbody').append(`
+            <tr>
+                <td class="p-1">${idx +1}</td>
+                <td class="p-1">
+                    <a href="${URL.createObjectURL(file)}" class="text-primary" target="_blank">${file.name}</a>
+                </td>
+            </tr>
+        `);
+    });
+}
+
+function resetSelectedFilesTable() {
+    $('div#prod-cont-preview table tbody').html('');
+    $('div#prod-pic-preview table tbody').html('');
+}
+
+function goBackPage() {
+    history.back();
 }

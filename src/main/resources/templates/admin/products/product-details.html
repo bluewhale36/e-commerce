@@ -1,141 +1,166 @@
-<div th:replace="~{/fragments/container :: container(~{::main})}" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <main>
+<div th:replace="~{/fragments/2col-splited :: 2col(~{::statics}, ~{::left}, ~{::right})}">
+    <div th:fragment="statics">
+        <link rel="stylesheet" href="/css/admin/product-details.css" />
         <script src="/js/admin/product-details.js" defer></script>
-        <h3>Admin Product Details Page</h3>
-        <div id="main-content" class="row mx-auto" style="width: 80%">
-            <div id="div-product-form" class="col m-2">
-                <form class="p-3 row" style="border: 1px solid black" id="form-product-details"
-                      th:with="productDTO=${product.getProductDTO()}">
-                    <div class="mb-3 col-12">
-                        <label for="text-prodcode" class="form-label">상품 식별 코드</label>
-                        <input type="text" id="text-prodcode" class="form-control" name="prodCode" th:value="${productDTO.getProdCode()}" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="text-usercode" class="form-label">상품 등록 관리자 식별 코드</label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="span-userdetail-page" style="cursor: pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z"/>
-                                </svg>
-                            </span>
-                            <input type="text" id="text-usercode" class="form-control" name="registeredAdminCode"
-                                   th:value="${productDTO.getRegisteredAdminCode()}" readonly />
-                        </div>
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="text-prodname" class="form-label">상품 명</label>
-                        <input type="text" id="text-prodname" class="form-control" name="prodName"
-                               th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}"
-                               th:value="${productDTO.getProdName()}" />
-                        <input type="text" id="text-prodname" class="form-control"
-                               th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
-                               th:value="${productDTO.getProdName()}" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="text-prodcategory" class="form-label">상위 분류</label>
-                        <!-- 상품을 등록한 관리자만 수정 가능한 input. -->
-                        <select id="text-prodcategory" class="form-select" name="prodCategory"
-                                th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}">
-                            <option value="none">선택...</option>
-                            <th:block th:each="prodCategory : ${product.getProdCategoryList()}">
-                                <option selected th:if="${prodCategory.equals(productDTO.getProdCategory())}"
-                                        th:value="${prodCategory}" th:text="${prodCategory.getCategoryInKorean()}"></option>
-                                <option th:unless="${prodCategory.equals(productDTO.getProdCategory())}"
-                                        th:value="${prodCategory}" th:text="${prodCategory.getCategoryInKorean()}"></option>
-                            </th:block>
-                        </select>
-                        <input type="text" id="text-prodcategory" class="form-control"
-                               th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
-                               th:value="${productDTO.getProdCategory().getCategoryInKorean()}" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="text-prodkind" class="form-label">하위 분류</label>
-                        <select id="text-prodkind" class="form-select" name="prodKind"
-                                th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}">
-                            <th:block th:each="prodKind : ${productDTO.getProdCategory().getProdKindList()}">
-                                <option selected th:if="${prodKind.equals(productDTO.getProdKind())}"
-                                        th:value="${prodKind}" th:text="${prodKind.getDescription()}"></option>
-                                <option th:unless="${prodKind.equals(productDTO.getProdKind())}"
-                                        th:value="${prodKind}" th:text="${prodKind.getDescription()}"></option>
-                            </th:block>
-                        </select>
-                        <input type="text" id="text-prodkind" class="form-control"
-                               th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
-                               th:value="${productDTO.getProdKind().getDescription()}" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="number-prodcnt" class="form-label">가격 (원)</label>
-                        <input type="number" id="number-prodcnt" class="form-control"
-                               th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}"
-                               th:value="${productDTO.getProdPrice()}" />
-                        <input type="number" id="number-prodcnt" class="form-control"
-                               th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
-                               th:value="${productDTO.getProdPrice()}" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="number-discntrate" class="form-label">할인율 (%)</label>
-                        <input type="number" id="number-discntrate" class="form-control"
-                               th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}"
-                               th:value="${productDTO.getDiscntRate()}" />
-                        <input type="number" id="number-discntrate" class="form-control"
-                               th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
-                               th:value="${productDTO.getDiscntRate()}" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="text-prodstatus" class="form-label">상품 상태</label>
-                        <select id="text-prodstatus" class="form-select" name="prodStatus"
-                                th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}">
-                            <th:block th:each="prodStatus : ${product.getProdStatusList()}">
-                                <option selected th:if="${prodStatus.equals(productDTO.getProdStatus())}"
-                                        th:value="${prodStatus}" th:text="${prodStatus.getDescription()}"></option>
-                                <option th:unless="${prodStatus.equals(productDTO.getProdStatus())}"
-                                        th:value="${prodStatus}" th:text="${prodStatus.getDescription()}"></option>
-                            </th:block>
-                        </select>
-                        <input type="text" id="text-prodstatus" class="form-control"
-                               th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
-                               th:value="${productDTO.getProdStatus().getDescription()}" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="text-isenabled" class="form-label">활성화 여부</label>
-                        <select id="text-isenabled" class="form-select" name="isEnabled"
-                                th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}">
-                            <th:block th:each="isEnabled : ${product.getIsEnabledList()}">
-                                <option selected th:if="${isEnabled.equals(productDTO.getIsEnabled())}"
-                                        th:value="${isEnabled}" th:text="${isEnabled.getDescription()}"></option>
-                                <option th:unless="${isEnabled.equals(productDTO.getIsEnabled())}"
-                                        th:value="${isEnabled}" th:text="${isEnabled.getDescription()}"></option>
-                            </th:block>
-                        </select>
-                        <input type="text" id="text-isenabled" class="form-control"
-                               th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
-                               th:value="${productDTO.getIsEnabled().getDescription()}" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="div-prodcont" class="form-label">상품 상세 설명 파일</label>
-                        <div id="div-prodcont" class="row">
-                            <input type="text" class="form-control col-12 mt-0"
-                                   th:each="cont : ${productDTO.getProdContList()}" th:value="${cont.getProdContName()}" readonly />
-                        </div>
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="div-prodpic" class="form-label">상품 커버 사진 파일</label>
-                        <div id="div-prodpic" class="row">
-                            <input type="text" class="form-control col-12 mt-0"
-                                   th:each="pic : ${productDTO.getProdPicList()}" th:value="${pic.getProdPicName()}" readonly />
-                        </div>
-                    </div>
-                    <div class="mb-3 col-12 row">
-                        <div class="col-2 mt-0 row p-0 me-2" th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}">
-                            <input type="submit" class="btn btn-primary-filled col ms-0" value="Submit" />
-                        </div>
-                        <div class="col-2 mt-0 row p-0">
-                            <input type="button" class="btn btn-secondary-outlined col ms-0" onclick="goBackPage()" value="Back" />
-                        </div>
-                    </div>
-                </form>
+    </div>
+    <div th:fragment="left">
+        <form class="form-card row" style="border: 1px solid black" id="form-product-details" th:with="productDTO=${product.getProductDTO()}">
+            <div class="mb-3 col-12">
+                <label for="text-prodcode" class="form-label">상품 식별 코드</label>
+                <input type="text" id="text-prodcode" class="form-control" name="prodCode" th:value="${productDTO.getProdCode()}" readonly />
             </div>
-            <div class="col m-2"></div>
+            <div class="mb-3 col-12">
+                <label for="text-usercode" class="form-label">상품 등록 관리자 식별 코드</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="span-userdetail-page" style="cursor: pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z"/>
+                        </svg>
+                    </span>
+                    <input type="text" id="text-usercode" class="form-control" name="registeredAdminCode"
+                           th:value="${productDTO.getRegisteredAdminCode()}" readonly />
+                </div>
+            </div>
+            <div class="mb-3 col-12">
+                <label for="text-prodname" class="form-label">상품 명</label>
+                <input type="text" id="text-prodname" class="form-control" name="prodName"
+                       th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}"
+                       th:value="${productDTO.getProdName()}" />
+                <input type="text" id="text-prodname" class="form-control"
+                       th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
+                       th:value="${productDTO.getProdName()}" readonly />
+            </div>
+            <div class="mb-3 col-12">
+                <label for="text-prodcategory" class="form-label">상위 분류</label>
+                <!-- 상품을 등록한 관리자만 수정 가능한 input. -->
+                <select id="text-prodcategory" class="form-select" name="prodCategory"
+                        th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}">
+                    <option value="none">선택...</option>
+                    <th:block th:each="prodCategory : ${product.getProdCategoryList()}">
+                        <option selected th:if="${prodCategory.equals(productDTO.getProdCategory())}"
+                                th:value="${prodCategory}" th:text="${prodCategory.getCategoryInKorean()}"></option>
+                        <option th:unless="${prodCategory.equals(productDTO.getProdCategory())}"
+                                th:value="${prodCategory}" th:text="${prodCategory.getCategoryInKorean()}"></option>
+                    </th:block>
+                </select>
+                <input type="text" id="text-prodcategory" class="form-control"
+                       th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
+                       th:value="${productDTO.getProdCategory().getCategoryInKorean()}" readonly />
+            </div>
+            <div class="mb-3 col-12">
+                <label for="text-prodkind" class="form-label">하위 분류</label>
+                <select id="text-prodkind" class="form-select" name="prodKind"
+                        th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}">
+                    <th:block th:each="prodKind : ${productDTO.getProdCategory().getProdKindList()}">
+                        <option selected th:if="${prodKind.equals(productDTO.getProdKind())}"
+                                th:value="${prodKind}" th:text="${prodKind.getDescription()}"></option>
+                        <option th:unless="${prodKind.equals(productDTO.getProdKind())}"
+                                th:value="${prodKind}" th:text="${prodKind.getDescription()}"></option>
+                    </th:block>
+                </select>
+                <input type="text" id="text-prodkind" class="form-control"
+                       th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
+                       th:value="${productDTO.getProdKind().getDescription()}" readonly />
+            </div>
+            <div class="mb-3 col-12">
+                <label for="number-prodcnt" class="form-label">가격 (원)</label>
+                <input type="number" id="number-prodcnt" class="form-control"
+                       th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}"
+                       th:value="${productDTO.getProdPrice()}" />
+                <input type="number" id="number-prodcnt" class="form-control"
+                       th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
+                       th:value="${productDTO.getProdPrice()}" readonly />
+            </div>
+            <div class="mb-3 col-12">
+                <label for="number-discntrate" class="form-label">할인율 (%)</label>
+                <input type="number" id="number-discntrate" class="form-control"
+                       th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}"
+                       th:value="${productDTO.getDiscntRate()}" />
+                <input type="number" id="number-discntrate" class="form-control"
+                       th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
+                       th:value="${productDTO.getDiscntRate()}" readonly />
+            </div>
+            <div class="mb-3 col-12">
+                <label for="text-prodstatus" class="form-label">상품 상태</label>
+                <select id="text-prodstatus" class="form-select" name="prodStatus"
+                        th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}">
+                    <th:block th:each="prodStatus : ${product.getProdStatusList()}">
+                        <option selected th:if="${prodStatus.equals(productDTO.getProdStatus())}"
+                                th:value="${prodStatus}" th:text="${prodStatus.getDescription()}"></option>
+                        <option th:unless="${prodStatus.equals(productDTO.getProdStatus())}"
+                                th:value="${prodStatus}" th:text="${prodStatus.getDescription()}"></option>
+                    </th:block>
+                </select>
+                <input type="text" id="text-prodstatus" class="form-control"
+                       th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
+                       th:value="${productDTO.getProdStatus().getDescription()}" readonly />
+            </div>
+            <div class="mb-3 col-12">
+                <label for="text-isenabled" class="form-label">활성화 여부</label>
+                <select id="text-isenabled" class="form-select" name="isEnabled"
+                        th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}">
+                    <th:block th:each="isEnabled : ${product.getIsEnabledList()}">
+                        <option selected th:if="${isEnabled.equals(productDTO.getIsEnabled())}"
+                                th:value="${isEnabled}" th:text="${isEnabled.getDescription()}"></option>
+                        <option th:unless="${isEnabled.equals(productDTO.getIsEnabled())}"
+                                th:value="${isEnabled}" th:text="${isEnabled.getDescription()}"></option>
+                    </th:block>
+                </select>
+                <input type="text" id="text-isenabled" class="form-control"
+                       th:unless="${productDTO.getRegisteredAdminCode().equals(userCode)}"
+                       th:value="${productDTO.getIsEnabled().getDescription()}" readonly />
+            </div>
+            <div class="mb-3 col-12 row">
+                <div class="col-2 mt-0 row p-0 me-2" th:if="${productDTO.getRegisteredAdminCode().equals(userCode)}">
+                    <input type="submit" class="btn btn-primary-filled col ms-0" value="Submit" />
+                </div>
+                <div class="col-2 mt-0 row p-0">
+                    <input type="button" class="btn btn-secondary-outlined col ms-0" onclick="goBackPage()" value="Back" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div th:fragment="right">
+        <div id="prod-cont-preview" class="col-12">
+            <label for="table-prod-cont" class="form-label">상품 상세 설명 파일</label>
+            <table id="table-prod-cont" class="mx-auto">
+                <thead>
+                <tr>
+                    <th class="p-2">no</th>
+                    <th class="p-2">파일 명</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cont, status : ${product.getProductDTO().getProdContList()}">
+                    <td class="p-1" th:text="${status.index +1}"></td>
+                    <td class="p-1">
+                        <a class="text-primary" th:href="@{/download(filename=${cont.getProdContName()})}"
+                           th:text="|[다운로드] ${cont.getProdContName()}|"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-    </main>
+        <div id="prod-pic-preview" class="col-12">
+            <label for="table-prod-pic" class="form-label">상품 커버 사진 파일</label>
+            <table id="table-prod-pic" class="mx-auto">
+                <thead>
+                <tr>
+                    <th class="p-2">no</th>
+                    <th class="p-2">파일 명</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pic, status : ${product.getProductDTO().getProdPicList()}">
+                    <td class="p-1" th:text="${status.index +1}"></td>
+                    <td class="p-1">
+                        <a class="text-primary" th:href="@{/download(filename=${pic.getProdPicName()})}"
+                           th:text="|[다운로드] ${pic.getProdPicName()}|"></a>
+                        <img th:src="@{/download(filename=${pic.getProdPicName()})}" style="width: 100%; height: auto; border: 1px solid black; border-radius: 5px; margin-top: 5px; margin-bottom: 5px;"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
