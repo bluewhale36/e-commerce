@@ -1,6 +1,20 @@
-<div th:replace="~{/fragments/container :: container(~{::main})}">
+<div th:replace="~{/fragments/admin-container :: container(~{::main})}">
     <main>
-        <h1>ADMIN</h1>
-        <div th:text="|current Login : ${userCode}|"></div>
+        <link rel="stylesheet" href="/css/admin/template-admin-list.css" />
+        <div id="template-title-n-new">
+            <div id="template-title">
+                <h1>Admin Dashboard</h1>
+            </div>
+            <div id="template-new"></div>
+        </div>
+        <div id="template-list-conditions">
+
+        </div>
+        <div id="template-list">
+            <p th:text="|current Login : ${userCode}|"></p>
+        </div>
+        <div id="template-pagination">
+
+        </div>
     </main>
 </div>

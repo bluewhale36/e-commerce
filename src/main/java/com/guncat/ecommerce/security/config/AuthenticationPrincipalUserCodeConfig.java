@@ -7,6 +7,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
+/**
+ * {@link com.guncat.ecommerce.security.annotation.AuthenticationPrincipalUserCode} Annotation 의 Resolver 인
+ * {@link AuthenticationPrincipalUserCodeArgumentResolver} 에 대한 configuration.
+ */
 @Configuration
 public class AuthenticationPrincipalUserCodeConfig implements WebMvcConfigurer {
 

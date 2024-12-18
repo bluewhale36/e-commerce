@@ -1,14 +1,16 @@
-<div th:replace="~{/fragments/container :: container(~{::main})}">
+<div th:replace="~{/fragments/admin-container ::container(~{::main})}">
     <main>
-        <link rel="stylesheet" href="/css/admin/product-new.css" />
-        <script src="/js/admin/product-new.js" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
-        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/additional-methods.min.js"></script>
-        <h3>New Product Page</h3>
-        <div class="mx-auto p-2 row" id="div-formcard">
-            <div class="col-6 p-2">
-                <form class="row" id="form-product-info" action="/admin/products/new" method="post" enctype="multipart/form-data" >
-                    <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.getToken()}" />
+        <h3>신규 상품 등록</h3>
+        <div th:replace="~{/fragments/col-2split :: 2col(~{::statics}, ~{::left}, ~{::right})}">
+            <div th:fragment="statics">
+                <link rel="stylesheet" href="/css/admin/product-new.css" />
+                <script src="/js/admin/product-new.js" defer></script>
+                <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+                <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/additional-methods.min.js"></script>
+            </div>
+            <div th:fragment="left">
+                <form class="form-card row" id="form-product-info" action="/admin/products/new" method="post" enctype="multipart/form-data">
+                    <input type="hidden" class="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.getToken()}" />
                     <div class="col-12 mb-3">
                         <label for="text-prod-name" class="form-label">상품 명</label>
                         <input type="text" id="text-prod-name" class="form-control" name="prodName" />
@@ -16,12 +18,12 @@
                     </div>
                     <div class="col-12 mb-3">
                         <label for="file-prod-cont" class="form-label">상품 상세 설명</label>
-                        <input type="file" id="file-prod-cont" class="form-control" name="prodCont" />
+                        <input type="file" id="file-prod-cont" class="form-control" name="prodCont" multiple />
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-12 mb-3">
                         <label for="file-prod-pic" class="form-label">상품 커버 사진</label>
-                        <input type="file" id="file-prod-pic" class="form-control" name="prodPic" />
+                        <input type="file" id="file-prod-pic" class="form-control" name="prodPic" multiple />
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-6 mb-3">
@@ -33,10 +35,9 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-6 mb-3">
-                        <!-- prod-category 에 따라 가변적 조절 -->
                         <label for="select-prod-kind" class="form-label">상품 하위 분류</label>
                         <select id="select-prod-kind" class="form-select" name="prodKind">
-                            <!-- option tag 가변 조절 -->
+                            <!-- prod-category 에 따른 option tag 가변 조절 -->
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -55,29 +56,61 @@
                         <input type="number" id="number-discnt-rate" class="form-control" value="0" name="discntRate" />
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-6 mb-3">
+                    <div class="col-6 mb-4">
                         <label for="select-isenabled" class="form-label">상품 가용 여부</label>
                         <select id="select-isenabled" class="form-select" name="isEnabled">
                             <option th:each="enable : ${isEnabled}" th:value="${enable}" th:text="${enable.getDescription()}"></option>
                         </select>
                     </div>
-                    <div class="col-6 mb-5">
+                    <div class="col-6 mb-4">
                         <label for="select-prod-status" class="form-label">상품 상태</label>
                         <select id="select-prod-status" class="form-select" name="prodStatus">
                             <option th:each="status : ${prodStatus}" th:value="${status}" th:text="${status.getDescription()}"></option>
                         </select>
                     </div>
-                    <div class="col-6 row ps-0 pe-0">
-                        <div class="col-6 row mt-0">
+                    <div class="col-9 row ps-0 pe-0 mb-3">
+                        <div class="col-4 row mt-0">
                             <input type="submit" value="Submit" id="btn-form-submit" class="btn btn-primary-filled col m-0" />
                         </div>
-                        <div class="col-6 row mt-0">
-                            <input type="reset" value="Reset" id="btn-form-reset" class="btn btn-secondary-outlined col m-0" />
+                        <div class="col-4 row mt-0">
+                            <input type="reset" value="Reset" id="btn-form-reset" class="btn btn-secondary-outlined col m-0" onclick="resetSelectedFilesTable()" />
+                        </div>
+                        <div class="col-4 row mt-0">
+                            <input type="button" value="Back" id="btn-form-back" class="btn btn-secondary-outlined col m-0" onclick="goBackPage()" />
                         </div>
                     </div>
                 </form>
             </div>
-
+            <div th:fragment="right">
+                <div id="prod-cont-preview" class="col-12">
+                    <label for="table-prod-cont" class="form-label">선택된 상품 상세 설명 파일</label>
+                    <table id="table-prod-cont" class="mx-auto">
+                        <thead>
+                        <tr>
+                            <th class="p-2">no</th>
+                            <th class="p-2">파일 명</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- 파일 선택에 따른 행 가변 출력 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="prod-pic-preview" class="col-12">
+                    <label for="table-prod-pic" class="form-label">선택된 상품 커버 사진 파일</label>
+                    <table id="table-prod-pic" class="mx-auto">
+                        <thead>
+                        <tr>
+                            <th class="p-2">no</th>
+                            <th class="p-2">파일 명</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- 파일 선택에 따른 행 가변 출력 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </main>
 </div>

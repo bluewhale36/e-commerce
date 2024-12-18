@@ -1,0 +1,14 @@
+.col-2split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    width: 100%;
+    height: fit-content;
+}
+
+.col-2split-left {
+    grid-column: 1 / 2;
+}
+.col-2split-right {
+    grid-column: 2 / 3;
+}

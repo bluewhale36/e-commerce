@@ -31,6 +31,8 @@ body {
 @mixin form-spacing-variants {
     --form-padding-x: .75rem;
     --form-padding-y: .375rem;
+    --form-readonly-padding-x: 0;
+    --form-readonly-padding-y: .375rem;
 }
 /*
     form-control 의 색상 정의.
@@ -44,6 +46,9 @@ body {
     --form-disabled-color: #{c.$grey-800};
     --form-disabled-bg-color: #{c.$grey-200};
     --form-disabled-border-color: #{c.$grey-800};
+    --form-readonly-color: #{c.$black};
+    --form-readonly-bg-color: transparent;
+    --form-readonly-border-color: transparent;
 }
 /*
     form-control 의 유효성 관련 색상 정의.
@@ -54,6 +59,29 @@ body {
     --form-focus-border-color: #{$color};
     --form-focus-box-shadow-color: #{bsf.get-box-shadow-color($color)};
     --form-focus-box-shadow: #{bsf.get-box-shadow(var(--form-focus-box-shadow-color))};
+}
+
+.form-card {
+    --form-padding-x: 1rem;
+    --form-padding-y: 1rem;
+    --form-border-color: #{c.$black};
+    --form-bg-color: transparent;
+    --form-border-width: 1px;
+    --form-font-size: 1rem;
+    --form-line-height: 1.5;
+    --form-font-weight: 400;
+    --form-border-radius: .375rem;
+
+
+    width: 100%;
+    padding: 1rem;
+    font-size: var(--form-font-size);
+    border-radius: var(--form-border-radius);
+    border: 1px solid var(--form-border-color);
+    line-height: var(--form-line-height);
+    font-weight: var(--form-font-weight);
+    background-color: var(--form-bg-color);
+    box-sizing: border-box;
 }
 
 /*
@@ -95,6 +123,14 @@ body {
         color: var(--form-disabled-color);
         background-color: var(--form-disabled-bg-color);
         border-color: var(--form-disabled-border-color);
+    }
+
+    &:read-only {
+        padding: var(--form-readonly-padding-y) var(--form-readonly-padding-x);
+        color: var(--form-readonly-color);
+        background-color: var(--form-readonly-bg-color);
+        border-color: var(--form-readonly-border-color);
+        pointer-events: none;
     }
 }
 
@@ -153,12 +189,24 @@ body {
         border-radius: 0;
 
     }
+
+    &:read-only {
+        padding: var(--form-readonly-padding-y) var(--form-readonly-padding-x);
+        color: var(--form-readonly-color);
+        background-color: var(--form-readonly-bg-color);
+        border-color: var(--form-readonly-border-color);
+        pointer-events: none;
+    }
 }
+
 /* label 태그 */
 .form-label {
     display: block;
     margin-bottom: .25rem;
     cursor: pointer;
+    &:has(+ .form-control:read-only) {
+        pointer-events: none;
+    }
 }
 
 
@@ -194,10 +242,7 @@ body {
         .form-control 중 .input-group-text 가 있는 것
         -> .input-group-text 제외 공간을 .form-control 이 차지해야 함.
     */
-    + .form-control[type=text],
-    + .form-control[type=password],
-    + .form-control[type=tel],
-    + .form-control[type=email] {
+    + .form-control {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
         position: relative;
@@ -210,10 +255,12 @@ body {
         flex: 1 1 auto;
         width: 1%;
         min-width: 0;
+    }
 
+    &:has(+ .form-control:read-only) {
+        border-color: transparent;
     }
 }
-
 .see-pswd {
     color: c.$black;
 }
@@ -315,6 +362,11 @@ button.form-control {
         background-color: var(--form-disabled-bg-color);
         border-color: var(--form-disabled-border-color);
     }
+
+    /*
+        select 태그는 readonly 속성이 존재하지 않는다.
+        따라서 &:read-only 선택자 또한 정의할 수 없다.
+     */
 }
 
 

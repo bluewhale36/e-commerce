@@ -1,50 +1,58 @@
-<div th:replace="~{/fragments/container :: container(~{::main})}" xmlns:sec="http://www.w3.org/1999/xhtml">
+<div th:replace="~{/fragments/admin-container :: container(~{::main})}">
     <main>
+        <link rel="stylesheet" href="/css/admin/template-admin-details.css" />
+        <link rel="stylesheet" href="/css/fragments/col-2split.css" />
         <script src="/js/admin/user-details.js" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
-        <h3>AdminUserDetails</h3>
-        <div id="main-content" class="row mx-auto" style="width: 80%;">
-            <div id="div-user-form" class="col m-2">
-                <form class="p-3 row" style="border: 1px solid black" id="form-user-details" th:with="userDTO=${user.getUsersDTO()}">
-                    <div class="mb-3 col-12">
-                        <label for="text-usercode" class="form-label">식별 코드</label>
-                        <input type="text" id="text-usercode" name="userCode" class="form-control"
-                               th:value="${userDTO.getUserCode()}" sec:authorize="hasRole('CEO')" readonly />
-                        <input type="text" id="text-usercode" class="form-control"
-                               th:value="${userDTO.getUserCode()}" sec:authorize="!hasRole('CEO')" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="text-userid" class="form-label">아이디</label>
-                        <input type="text" id="text-userid" name="userId" class="form-control"
-                               th:value="${userDTO.getUserId()}" sec:authorize="hasRole('CEO')" readonly />
-                        <input type="text" id="text-userid" class="form-control"
-                               th:value="${userDTO.getUserId()}" sec:authorize="!hasRole('CEO')" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="text-name" class="form-label">이름</label>
-                        <input type="text" id="text-name" name="name" class="form-control"
-                               th:value="${userDTO.getName()}" sec:authorize="hasRole('CEO')" readonly />
-                        <input type="text" id="text-name" class="form-control"
-                               th:value="${userDTO.getName()}" sec:authorize="!hasRole('CEO')" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="input-tel" class="form-label">전화번호</label>
-                        <input type="tel" id="input-tel" name="tel" class="form-control"
-                               th:value="${userDTO.getTel()}" sec:authorize="hasRole('CEO')" readonly />
-                        <input type="text" id="input-tel" class="form-control"
-                               th:value="${userDTO.getTel()}" sec:authorize="!hasRole('CEO')" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="input-email" class="form-label">이메일</label>
-                        <input type="email" id="input-email" name="email" class="form-control"
-                               th:value="${userDTO.getEmail()}" sec:authorize="hasRole('CEO')" readonly />
-                        <input type="text" id="input-email" class="form-control"
-                               th:value="${userDTO.getEmail()}" sec:authorize="!hasRole('CEO')" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="div-roles" class="form-label">사용자 권한</label>
-                        <div id="div-roles" sec:authorize="hasRole('CEO')" th:with="roleList=${user.getRoleList()}">
-                            <th:block th:each="role : ${roleList}">
+        <div id="template-title-n-action">
+            <div id="template-title">
+                <h1>Admin User Details</h1>
+            </div>
+            <div id="template-action"></div>
+        </div>
+        <div id="template-details">
+            <div th:replace="~{/fragments/col-2split :: 2col(~{::left}, ~{::right})}" xmlns:sec="http://www.w3.org/1999/xhtml">
+                <div th:fragment="left">
+                    <form class="form-card row mb-0" style="border: 1px solid black" id="form-user-details" th:with="userDTO=${user.getUsersDTO()}">
+                        <div class="mb-3 col-12">
+                            <label for="text-usercode" class="form-label">식별 코드</label>
+                            <input type="text" id="text-usercode" name="userCode" class="form-control"
+                                   th:value="${userDTO.getUserCode()}" sec:authorize="hasRole('CEO')" readonly />
+                            <input type="text" id="text-usercode" class="form-control"
+                                   th:value="${userDTO.getUserCode()}" sec:authorize="!hasRole('CEO')" readonly />
+                        </div>
+                        <div class="mb-3 col-12">
+                            <label for="text-userid" class="form-label">아이디</label>
+                            <input type="text" id="text-userid" name="userId" class="form-control"
+                                   th:value="${userDTO.getUserId()}" sec:authorize="hasRole('CEO')" readonly />
+                            <input type="text" id="text-userid" class="form-control"
+                                   th:value="${userDTO.getUserId()}" sec:authorize="!hasRole('CEO')" readonly />
+                        </div>
+                        <div class="mb-3 col-12">
+                            <label for="text-name" class="form-label">이름</label>
+                            <input type="text" id="text-name" name="name" class="form-control"
+                                   th:value="${userDTO.getName()}" sec:authorize="hasRole('CEO')" readonly />
+                            <input type="text" id="text-name" class="form-control"
+                                   th:value="${userDTO.getName()}" sec:authorize="!hasRole('CEO')" readonly />
+                        </div>
+                        <div class="mb-3 col-12">
+                            <label for="input-tel" class="form-label">전화번호</label>
+                            <input type="tel" id="input-tel" name="tel" class="form-control"
+                                   th:value="${userDTO.getTel()}" sec:authorize="hasRole('CEO')" readonly />
+                            <input type="text" id="input-tel" class="form-control"
+                                   th:value="${userDTO.getTel()}" sec:authorize="!hasRole('CEO')" readonly />
+                        </div>
+                        <div class="mb-3 col-12">
+                            <label for="input-email" class="form-label">이메일</label>
+                            <input type="email" id="input-email" name="email" class="form-control"
+                                   th:value="${userDTO.getEmail()}" sec:authorize="hasRole('CEO')" readonly />
+                            <input type="text" id="input-email" class="form-control"
+                                   th:value="${userDTO.getEmail()}" sec:authorize="!hasRole('CEO')" readonly />
+                        </div>
+                        <div class="mb-3 col-12">
+                            <label for="div-roles" class="form-label">사용자 권한</label>
+                            <div id="div-roles" sec:authorize="hasRole('CEO')" th:with="roleList=${user.getRoleList()}">
+                                <th:block th:each="role : ${roleList}">
                                 <span class="me-2">
                                     <th:block th:if="${userDTO.getRoleList().contains(role)}">
                                         <input type="checkbox" th:id="|chk-${role.name()}|" class="form-control"
@@ -56,59 +64,62 @@
                                     </th:block>
                                     <label th:for="|chk-${role.name()}|" th:text="${role.name()}" class="form-label"></label>
                                 </span>
-                            </th:block>
+                                </th:block>
+                            </div>
+                            <input type="text" id="div-roles" class="form-control"
+                                   th:value="${userDTO.getRoleList()}" sec:authorize="!hasRole('CEO')" readonly />
+                            <div class="invalid-feedback"></div>
                         </div>
-                        <input type="text" id="div-roles" class="form-control"
-                               th:value="${userDTO.getRoleList()}" sec:authorize="!hasRole('CEO')" readonly />
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="select-isenabled" class="form-label">사용자 계정 활성화 여부</label>
-                        <select id="select-isenabled" class="form-select" name="isEnabled"
-                                sec:authorize="hasRole('CEO')" th:with="isEnabledList=${user.getIsEnabledList()}">
-                            <th:block th:each="isEnabled : ${isEnabledList}">
-                                <th:block th:if="${userDTO.getIsEnabled().equals(isEnabled)}">
-                                    <option th:value="${isEnabled}" th:text="${isEnabled.getDescription()}" selected></option>
+                        <div class="mb-3 col-12">
+                            <label for="select-isenabled" class="form-label">사용자 계정 활성화 여부</label>
+                            <select id="select-isenabled" class="form-select" name="isEnabled"
+                                    sec:authorize="hasRole('CEO')" th:with="isEnabledList=${user.getIsEnabledList()}">
+                                <th:block th:each="isEnabled : ${isEnabledList}">
+                                    <th:block th:if="${userDTO.getIsEnabled().equals(isEnabled)}">
+                                        <option th:value="${isEnabled}" th:text="${isEnabled.getDescription()}" selected></option>
+                                    </th:block>
+                                    <th:block th:unless="${userDTO.getIsEnabled().equals(isEnabled)}">
+                                        <option th:value="${isEnabled}" th:text="${isEnabled.getDescription()}"></option>
+                                    </th:block>
                                 </th:block>
-                                <th:block th:unless="${userDTO.getIsEnabled().equals(isEnabled)}">
-                                    <option th:value="${isEnabled}" th:text="${isEnabled.getDescription()}"></option>
-                                </th:block>
-                            </th:block>
-                        </select>
-                        <input type="text" id="select-isenabled" class="form-control"
-                               th:value="${userDTO.getIsEnabled()}" sec:authorize="!hasRole('CEO')" readonly />
-                    </div>
-                    <div class="mb-3 col-12">
-                        <label for="select-islocked" class="form-label">사용자 계정 잠김 여부</label>
-                        <select id="select-islocked" class="form-select" name="isLocked"
-                                sec:authorize="hasRole('CEO')" th:with="isLockedList=${user.getIsLockedList()}">
-                            <th:block th:each="isLocked : ${isLockedList}">
-                                <th:block th:if="${userDTO.getIsLocked().equals(isLocked)}">
-                                    <option th:value="${isLocked}" th:text="${isLocked.getDescription()}" selected></option>
-                                </th:block>
-                                <th:block th:unless="${userDTO.getIsLocked().equals(isLocked)}">
-                                    <option th:value="${isLocked}" th:text="${isLocked.getDescription()}"></option>
-                                </th:block>
-                            </th:block>
-                        </select>
-                        <input type="text" id="select-islocked" class="form-control"
-                               th:value="${userDTO.getIsLocked()}" sec:authorize="!hasRole('CEO')" readonly />
-                    </div>
-                    <div class="mb-3 col-12 row">
-                        <div class="col-2 mt-0 row p-0 me-2" sec:authorize="hasRole('CEO')">
-                            <input type="submit" class="btn btn-primary-filled col ms-0" value="Submit" />
+                            </select>
+                            <input type="text" id="select-isenabled" class="form-control"
+                                   th:value="${userDTO.getIsEnabled()}" sec:authorize="!hasRole('CEO')" readonly />
                         </div>
-                        <div class="col-2 mt-0 row p-0">
-                            <input type="button" class="btn btn-secondary-outlined col ms-0" onclick="goBackPage()" value="Back" />
+                        <div class="mb-3 col-12">
+                            <label for="select-islocked" class="form-label">사용자 계정 잠김 여부</label>
+                            <select id="select-islocked" class="form-select" name="isLocked"
+                                    sec:authorize="hasRole('CEO')" th:with="isLockedList=${user.getIsLockedList()}">
+                                <th:block th:each="isLocked : ${isLockedList}">
+                                    <th:block th:if="${userDTO.getIsLocked().equals(isLocked)}">
+                                        <option th:value="${isLocked}" th:text="${isLocked.getDescription()}" selected></option>
+                                    </th:block>
+                                    <th:block th:unless="${userDTO.getIsLocked().equals(isLocked)}">
+                                        <option th:value="${isLocked}" th:text="${isLocked.getDescription()}"></option>
+                                    </th:block>
+                                </th:block>
+                            </select>
+                            <input type="text" id="select-islocked" class="form-control"
+                                   th:value="${userDTO.getIsLocked()}" sec:authorize="!hasRole('CEO')" readonly />
                         </div>
+                        <div class="mb-3 col-12 row">
+                            <div class="col-2 mt-0 row p-0 me-2" sec:authorize="hasRole('CEO')">
+                                <input type="submit" class="btn btn-primary-filled col ms-0" value="Submit" />
+                            </div>
+                            <div class="col-2 mt-0 row p-0">
+                                <input type="button" class="btn btn-secondary-outlined col ms-0" onclick="goBackPage()" value="Back" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div th:fragment="right">
+                    <div class="p-3">
+                        there will be some other data.
                     </div>
-                </form>
-            </div>
-            <div class="col m-2">
-                <div class="p-3">
-                    there will be some other data.
                 </div>
             </div>
         </div>
+
+
     </main>
 </div>

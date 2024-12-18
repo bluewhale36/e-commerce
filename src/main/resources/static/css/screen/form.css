@@ -27,6 +27,27 @@ body {
 /*
     form-control 의 유효성 관련 색상 정의.
  */
+.form-card {
+  --form-padding-x: 1rem;
+  --form-padding-y: 1rem;
+  --form-border-color: #000;
+  --form-bg-color: transparent;
+  --form-border-width: 1px;
+  --form-font-size: 1rem;
+  --form-line-height: 1.5;
+  --form-font-weight: 400;
+  --form-border-radius: .375rem;
+  width: 100%;
+  padding: 1rem;
+  font-size: var(--form-font-size);
+  border-radius: var(--form-border-radius);
+  border: 1px solid var(--form-border-color);
+  line-height: var(--form-line-height);
+  font-weight: var(--form-font-weight);
+  background-color: var(--form-bg-color);
+  box-sizing: border-box;
+}
+
 /*
     form-control 중 text, password, tel, email input 정의.
  */
@@ -37,18 +58,23 @@ body {
 .form-control[type=number] {
   --form-padding-x: .75rem;
   --form-padding-y: .375rem;
+  --form-readonly-padding-x: 0;
+  --form-readonly-padding-y: .375rem;
   --form-font-size: 1rem;
   --form-line-height: 1.5;
   --form-font-weight: 400;
   --form-border-radius: .375rem;
-  --form-border-color: #666666;
+  --form-border-color: rgb(102, 102, 102);
   --form-bg-color: transparent;
   --form-focus-border-color: rgb(29, 191, 236);
   --form-focus-box-shadow-color: rgba(29, 191, 236, 0.35);
   --form-focus-box-shadow: 0 0 1px 3px var(--form-focus-box-shadow-color);
-  --form-disabled-color: #333333;
-  --form-disabled-bg-color: #cccccc;
-  --form-disabled-border-color: #333333;
+  --form-disabled-color: rgb(51, 51, 51);
+  --form-disabled-bg-color: rgb(204, 204, 204);
+  --form-disabled-border-color: rgb(51, 51, 51);
+  --form-readonly-color: #000;
+  --form-readonly-bg-color: transparent;
+  --form-readonly-border-color: transparent;
   display: block;
   width: 100%;
   padding: var(--form-padding-y) var(--form-padding-x);
@@ -81,6 +107,17 @@ body {
   background-color: var(--form-disabled-bg-color);
   border-color: var(--form-disabled-border-color);
 }
+.form-control[type=text]:read-only,
+.form-control[type=password]:read-only,
+.form-control[type=tel]:read-only,
+.form-control[type=email]:read-only,
+.form-control[type=number]:read-only {
+  padding: var(--form-readonly-padding-y) var(--form-readonly-padding-x);
+  color: var(--form-readonly-color);
+  background-color: var(--form-readonly-bg-color);
+  border-color: var(--form-readonly-border-color);
+  pointer-events: none;
+}
 
 /*
     form-control 중 file input 정의.
@@ -88,18 +125,23 @@ body {
 .form-control[type=file] {
   --form-padding-x: .75rem;
   --form-padding-y: .375rem;
+  --form-readonly-padding-x: 0;
+  --form-readonly-padding-y: .375rem;
   --form-font-size: 1rem;
   --form-line-height: 1.5;
   --form-font-weight: 400;
   --form-border-radius: .375rem;
-  --form-border-color: #666666;
+  --form-border-color: rgb(102, 102, 102);
   --form-bg-color: transparent;
   --form-focus-border-color: rgb(29, 191, 236);
   --form-focus-box-shadow-color: rgba(29, 191, 236, 0.35);
   --form-focus-box-shadow: 0 0 1px 3px var(--form-focus-box-shadow-color);
-  --form-disabled-color: #333333;
-  --form-disabled-bg-color: #cccccc;
-  --form-disabled-border-color: #333333;
+  --form-disabled-color: rgb(51, 51, 51);
+  --form-disabled-bg-color: rgb(204, 204, 204);
+  --form-disabled-border-color: rgb(51, 51, 51);
+  --form-readonly-color: #000;
+  --form-readonly-bg-color: transparent;
+  --form-readonly-border-color: transparent;
   display: block;
   width: 100%;
   padding: var(--form-padding-y) var(--form-padding-x);
@@ -140,12 +182,22 @@ body {
   border-inline-end-width: var(--form-border-width);
   border-radius: 0;
 }
+.form-control[type=file]:read-only {
+  padding: var(--form-readonly-padding-y) var(--form-readonly-padding-x);
+  color: var(--form-readonly-color);
+  background-color: var(--form-readonly-bg-color);
+  border-color: var(--form-readonly-border-color);
+  pointer-events: none;
+}
 
 /* label 태그 */
 .form-label {
   display: block;
   margin-bottom: 0.25rem;
   cursor: pointer;
+}
+.form-label:has(+ .form-control:read-only) {
+  pointer-events: none;
 }
 
 /*
@@ -180,10 +232,7 @@ body {
       -> .input-group-text 제외 공간을 .form-control 이 차지해야 함.
   */
 }
-.input-group-text + .form-control[type=text],
-.input-group-text + .form-control[type=password],
-.input-group-text + .form-control[type=tel],
-.input-group-text + .form-control[type=email] {
+.input-group-text + .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   position: relative;
@@ -195,6 +244,9 @@ body {
   flex: 1 1 auto;
   width: 1%;
   min-width: 0;
+}
+.input-group-text:has(+ .form-control:read-only) {
+  border-color: transparent;
 }
 
 .see-pswd {
@@ -219,7 +271,7 @@ body {
   display: inline-block;
   width: 1rem;
   height: 1rem;
-  background-color: #cccccc;
+  background-color: rgb(204, 204, 204);
   mask: url("/img/check-circle.svg");
   mask-size: cover;
   mask-repeat: no-repeat;
@@ -244,18 +296,23 @@ body {
 button.form-control {
   --form-padding-x: .75rem;
   --form-padding-y: .375rem;
+  --form-readonly-padding-x: 0;
+  --form-readonly-padding-y: .375rem;
   --form-font-size: 1rem;
   --form-line-height: 1.5;
   --form-font-weight: 400;
   --form-border-radius: .375rem;
-  --form-border-color: #666666;
+  --form-border-color: rgb(102, 102, 102);
   --form-bg-color: transparent;
   --form-focus-border-color: rgb(203, 165, 131);
   --form-focus-box-shadow-color: rgba(203, 165, 131, 0.35);
   --form-focus-box-shadow: 0 0 1px 3px var(--form-focus-box-shadow-color);
-  --form-disabled-color: #333333;
-  --form-disabled-bg-color: #cccccc;
-  --form-disabled-border-color: #333333;
+  --form-disabled-color: rgb(51, 51, 51);
+  --form-disabled-bg-color: rgb(204, 204, 204);
+  --form-disabled-border-color: rgb(51, 51, 51);
+  --form-readonly-color: #000;
+  --form-readonly-bg-color: transparent;
+  --form-readonly-border-color: transparent;
   display: block;
   width: 100%;
   padding: var(--form-padding-y) var(--form-padding-x);
@@ -272,18 +329,23 @@ button.form-control {
 .form-select {
   --form-padding-x: .75rem;
   --form-padding-y: .375rem;
+  --form-readonly-padding-x: 0;
+  --form-readonly-padding-y: .375rem;
   --form-font-size: 1rem;
   --form-line-height: 1.5;
   --form-font-weight: 400;
   --form-border-radius: .375rem;
-  --form-border-color: #666666;
+  --form-border-color: rgb(102, 102, 102);
   --form-bg-color: transparent;
   --form-focus-border-color: rgb(29, 191, 236);
   --form-focus-box-shadow-color: rgba(29, 191, 236, 0.35);
   --form-focus-box-shadow: 0 0 1px 3px var(--form-focus-box-shadow-color);
-  --form-disabled-color: #333333;
-  --form-disabled-bg-color: #cccccc;
-  --form-disabled-border-color: #333333;
+  --form-disabled-color: rgb(51, 51, 51);
+  --form-disabled-bg-color: rgb(204, 204, 204);
+  --form-disabled-border-color: rgb(51, 51, 51);
+  --form-readonly-color: #000;
+  --form-readonly-bg-color: transparent;
+  --form-readonly-border-color: transparent;
   display: block;
   width: 100%;
   padding: var(--form-padding-y) 2.25rem var(--form-padding-y) 0.75rem;
@@ -301,6 +363,10 @@ button.form-control {
   box-sizing: border-box;
   /* 클릭 했을 시 */
   /* 비활성화 시 */
+  /*
+      select 태그는 readonly 속성이 존재하지 않는다.
+      따라서 &:read-only 선택자 또한 정의할 수 없다.
+   */
 }
 .form-select:focus {
   border-color: var(--form-focus-border-color);

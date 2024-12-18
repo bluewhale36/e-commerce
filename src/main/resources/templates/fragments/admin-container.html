@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org" th:fragment="container(content)">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="_csrf" th:content="${_csrf.getToken()}">
+  <meta name="_csrf_header" th:content="${_csrf.getHeaderName()}">
+  <title>GUNCAT</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="/js/fragments/admin-container.js" defer></script>
+  <!-- <script src="/js/device/device.js" defer></script> -->
+  <script src="/js/screen/form.js" defer></script>
+  <link rel="stylesheet" href="/css/screen/variables.css" />
+  <link rel="stylesheet" href="/css/screen/styles.css" />
+  <link rel="stylesheet" href="/css/scroll/scroll.css" />
+<!--  <link rel="stylesheet" href="/css/grid-template/desktop.css" id="device-template-css" />-->
+  <link rel="stylesheet" href="/css/screen/layout.css" />
+  <link rel="stylesheet" href="/css/screen/form.css" />
+  <link rel="stylesheet" href="/css/screen/buttons.css" />
+  <link rel="stylesheet" href="/css/screen/spacing.css" />
+  <link rel="stylesheet" href="/css/screen/text-style.css" />
+  <link rel="stylesheet" href="/css/fragments/admin-container.css" />
+</head>
+<body>
+<div id="container">
+  <header class="p-2">
+    <h1>Mall Admin</h1>
+  </header>
+  <nav>
+    <ul>
+      <li>Dashboard</li>
+      <li>Users</li>
+      <li>Products</li>
+    </ul>
+  </nav>
+  <main th:replace="${content}"></main>
+  <footer class="p-2">
+    <div class="row">
+      <div class="col-12">
+        <a class="text-primary" href="/">GO TO MALL</a>
+      </div>
+      <div class="col-12">
+        <p>
+          <a class="text-info" th:text="${#authentication.getName()}" href="/users/login"></a>
+        </p>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

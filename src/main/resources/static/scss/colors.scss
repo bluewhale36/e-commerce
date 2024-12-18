@@ -1,3 +1,5 @@
+@use 'sass:math' as math;
+
 // 주요 테마 색상
 $primary: rgb(203, 165, 131);
 $secondary: rgb(108, 117, 125);
@@ -8,15 +10,28 @@ $info: rgb(29, 191, 236);
 
 // 흰색 - 검은색 스펙트럼
 $white: #fff;
-$grey-100: darken($white, 10%);
-$grey-200: darken($white, 20%);
-$grey-300: darken($white, 30%);
-$grey-400: darken($white, 40%);
-$grey-500: darken($white, 50%);
-$grey-600: darken($white, 60%);
-$grey-700: darken($white, 70%);
-$grey-800: darken($white, 80%);
-$grey-900: darken($white, 90%);
+// darken 결과를 정수로 변환하는 함수
+@function rounded-darken($color, $amount) {
+  $darkened-color: darken($color, $amount);
+
+  // RGB 값 추출
+  $red: math.round(red($darkened-color));
+  $green: math.round(green($darkened-color));
+  $blue: math.round(blue($darkened-color));
+
+  // 정수형 RGB로 색상 생성
+  @return rgb($red, $green, $blue);
+}
+
+$grey-100: rounded-darken($white, 10%);
+$grey-200: rounded-darken($white, 20%);
+$grey-300: rounded-darken($white, 30%);
+$grey-400: rounded-darken($white, 40%);
+$grey-500: rounded-darken($white, 50%);
+$grey-600: rounded-darken($white, 60%);
+$grey-700: rounded-darken($white, 70%);
+$grey-800: rounded-darken($white, 80%);
+$grey-900: rounded-darken($white, 90%);
 $black: #000;
 
 $theme-color-variants: (
@@ -29,6 +44,15 @@ $theme-color-variants: (
 );
 
 $grey-scale-variants: (
-    $white, $grey-100, $grey-200, $grey-300, $grey-400,
-    $grey-500, $grey-600, $grey-700, $grey-800, $grey-900, $black 
+    "white": $white,
+    "grey-100": $grey-100,
+    "grey-200": $grey-200,
+    "grey-300": $grey-300,
+    "grey-400": $grey-400,
+    "grey-500": $grey-500,
+    "grey-600": $grey-600,
+    "grey-700": $grey-700,
+    "grey-800": $grey-800,
+    "grey-900": $grey-900,
+    "black": $black
 );
