@@ -1,10 +1,10 @@
 div#div-main-content {
-    width: 75%;
+    width: 100%;
     border: 1px solid black;
 }
 
 table#table-users {
-    width: 100%;
+    width: 99%;
     border-collapse: collapse;
 }
 

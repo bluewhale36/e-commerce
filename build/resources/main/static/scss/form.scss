@@ -31,6 +31,8 @@ body {
 @mixin form-spacing-variants {
     --form-padding-x: .75rem;
     --form-padding-y: .375rem;
+    --form-readonly-padding-x: 0;
+    --form-readonly-padding-y: .375rem;
 }
 /*
     form-control 의 색상 정의.
@@ -44,6 +46,9 @@ body {
     --form-disabled-color: #{c.$grey-800};
     --form-disabled-bg-color: #{c.$grey-200};
     --form-disabled-border-color: #{c.$grey-800};
+    --form-readonly-color: #{c.$black};
+    --form-readonly-bg-color: transparent;
+    --form-readonly-border-color: transparent;
 }
 /*
     form-control 의 유효성 관련 색상 정의.
@@ -119,6 +124,14 @@ body {
         background-color: var(--form-disabled-bg-color);
         border-color: var(--form-disabled-border-color);
     }
+
+    &:read-only {
+        padding: var(--form-readonly-padding-y) var(--form-readonly-padding-x);
+        color: var(--form-readonly-color);
+        background-color: var(--form-readonly-bg-color);
+        border-color: var(--form-readonly-border-color);
+        pointer-events: none;
+    }
 }
 
 /*
@@ -176,12 +189,24 @@ body {
         border-radius: 0;
 
     }
+
+    &:read-only {
+        padding: var(--form-readonly-padding-y) var(--form-readonly-padding-x);
+        color: var(--form-readonly-color);
+        background-color: var(--form-readonly-bg-color);
+        border-color: var(--form-readonly-border-color);
+        pointer-events: none;
+    }
 }
+
 /* label 태그 */
 .form-label {
     display: block;
     margin-bottom: .25rem;
     cursor: pointer;
+    &:has(+ .form-control:read-only) {
+        pointer-events: none;
+    }
 }
 
 
@@ -230,10 +255,12 @@ body {
         flex: 1 1 auto;
         width: 1%;
         min-width: 0;
+    }
 
+    &:has(+ .form-control:read-only) {
+        border-color: transparent;
     }
 }
-
 .see-pswd {
     color: c.$black;
 }
@@ -335,6 +362,11 @@ button.form-control {
         background-color: var(--form-disabled-bg-color);
         border-color: var(--form-disabled-border-color);
     }
+
+    /*
+        select 태그는 readonly 속성이 존재하지 않는다.
+        따라서 &:read-only 선택자 또한 정의할 수 없다.
+     */
 }
 
 

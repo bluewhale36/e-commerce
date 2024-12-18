@@ -19,4 +19,13 @@ html 에 불러오는 모든 css 파일 중 가장 먼저 로딩해야 함.
     --cancel-color: #{c.$grey-700}; /* 취소 컬러 (할인 전 가격, 솔드 아웃 등) */
     --innerMenu-width: 10rem; /* 왼쪽 메뉴 바 너비 */
     --border-radius: .375rem; /* border radius */
+
+    @each $key, $value in c.$theme-color-variants {
+        --color-#{$key}: #{$value};
+    }
+
+    @each $key, $value in c.$grey-scale-variants {
+        --color-#{$key}: #{$value};
+    }
 }
+

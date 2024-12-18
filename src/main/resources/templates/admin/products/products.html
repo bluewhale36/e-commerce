@@ -1,15 +1,18 @@
-<div th:replace="~{/fragments/container :: container(~{::main})}">
+<div th:replace="~{/fragments/admin-container :: container(~{::main})}">
     <main>
+        <link rel="stylesheet" href="/css/admin/template-admin-list.css" />
         <link rel="stylesheet" href="/css/admin/products.css" />
         <script src="/js/admin/products.js" defer></script>
-        <h3>Admin Products Page</h3>
-        <button type="button" class="btn btn-primary-outlined col" onclick="newProduct()">새 상품 등록</button>
 
-        <div class="mx-auto mt-3 row" id="div-main-content">
-            <div class="col-12" style="text-align: center">
-                Prod Code 를 클릭하여 상세 정보 조회
+        <div id="template-title-n-new">
+            <div id="template-title">
+                <h1>Admin Products</h1>
             </div>
-
+            <div id="template-new">
+                <button type="button" class="btn btn-primary-outlined" onclick="newProduct()">새 상품 등록</button>
+            </div>
+        </div>
+        <div id="template-list-conditions">
             <!-- 검색, 정렬, 필터 조건 -->
             <div id="div-conditions" class="mb-3">
                 <form class="row mb-0" id="form-conditions">
@@ -74,11 +77,12 @@
 
                 </form>
             </div>
-
+        </div>
+        <div id="template-list">
             <!-- 상품 정보 렌더링 -->
-            <div class="col-12 my-0">
+            <div class="col-12 my-0" id="div-product-table">
                 <div id="div-has-data">
-                    <table id="table-product">
+                    <table id="table-product" class="mx-auto">
                         <thead>
                         <tr>
                             <th class="p-1">Product Code</th>
@@ -99,7 +103,8 @@
                     <span class="text-secondary col" style="text-align: center">검색 결과가 없습니다.</span>
                 </div>
             </div>
-
+        </div>
+        <div id="template-pagination">
             <!-- 페이징 -->
             <div class="col-12 row mt-3 mb-1" id="div-paging">
                 <!-- 이전 페이지 버튼 -->
@@ -112,5 +117,11 @@
                 <div class="col-1 row" id="div-paging-right"></div>
             </div>
         </div>
+
+<!--        <div class="mx-auto mt-3 row" id="div-main-content">-->
+<!--            -->
+
+<!--            -->
+<!--        </div>-->
     </main>
 </div>

@@ -1,0 +1,14 @@
+<main>
+    <link rel="stylesheet" href="/css/admin/template-admin-details.css" />
+    <link rel="stylesheet" href="/css/fragments/col-2split.css" />
+    <div id="template-title-n-action">
+        <div id="template-title"></div>
+        <div id="template-action"></div>
+    </div>
+    <div id="template-details">
+        <div th:replace="~{/fragments/col-2split :: 2col(~{::left}, ~{::right})}">
+            <div th:fragment="left"></div>
+            <div th:fragment="right"></div>
+        </div>
+    </div>
+</main>
