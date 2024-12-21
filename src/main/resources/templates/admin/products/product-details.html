@@ -143,7 +143,7 @@
                             <tr th:each="cont, status : ${product.getProductDTO().getProdContList()}">
                                 <td class="p-1" th:text="${status.index +1}"></td>
                                 <td class="p-1">
-                                    <a class="text-primary" th:href="@{/download(filename=${cont.getProdContName()})}"
+                                    <a class="text-primary" th:href="@{/api/file/download/{filename}(filename=${cont.getProdContName()})}"
                                        th:text="|[다운로드] ${cont.getProdContName()}|"></a>
                                 </td>
                             </tr>
@@ -163,9 +163,9 @@
                             <tr th:each="pic, status : ${product.getProductDTO().getProdPicList()}">
                                 <td class="p-1" th:text="${status.index +1}"></td>
                                 <td class="p-1">
-                                    <a class="text-primary" th:href="@{/download(filename=${pic.getProdPicName()})}"
+                                    <a class="text-primary" th:href="@{/api/file/download/{filename}(filename=${pic.getProdPicName()})}"
                                        th:text="|[다운로드] ${pic.getProdPicName()}|"></a>
-                                    <img th:src="@{/download(filename=${pic.getProdPicName()})}" style="width: 100%; height: auto; border: 1px solid black; border-radius: 5px; margin-top: 5px; margin-bottom: 5px;"/>
+                                    <img th:src="@{/api/file/file/{filename}(filename=${pic.getProdPicName()})}" style="width: 100%; height: auto; border: 1px solid black; border-radius: 5px; margin-top: 5px; margin-bottom: 5px;"/>
                                 </td>
                             </tr>
                             </tbody>

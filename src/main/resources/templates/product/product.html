@@ -1,0 +1,17 @@
+  <div th:replace="~{/fragments/container :: container(~{::main})}">
+      <main>
+          <link rel="stylesheet" href="/css/product/product.css" />
+          <script src="/js/product/product.js" defer></script>
+          <h1>Product Page</h1>
+          <div id="prod-gallery">
+              <span class="gallery-item" th:each="product : ${productDTO}" th:if="${product.getIsEnabled().toBoolean()}">
+                      <input type="hidden" th:value="${product.getProdCode()}" />
+                      <p><b th:text="${product.getProdName()}"></b></p>
+                      <p th:text="${product.getProdCategory()}"></p>
+                      <p th:text="${product.getProdKind()}"></p>
+                      <p th:text="|가격 : ${product.getProdPrice()}|"></p>
+                      <p th:text="|할인율 : ${product.getDiscntRate()}|"></p>
+              </span>
+          </div>
+      </main>
+  </div>

@@ -58,9 +58,10 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests( req -> req
                         .requestMatchers("/", "/other").permitAll()
+                        .requestMatchers("/product", "/product/details/*").permitAll()
                         .requestMatchers("/users/login", "/users/join", "/users/dup/**").permitAll()
                         .requestMatchers("/email/**").permitAll()
-                        .requestMatchers("/download").permitAll()
+                        .requestMatchers("/api/file/**").permitAll()
                         .requestMatchers("/css/**", "/scss/**","/js/**", "/img/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyRole(Role.CEO.name(), Role.STAFF.name())
                         .requestMatchers("/admin/**").fullyAuthenticated()

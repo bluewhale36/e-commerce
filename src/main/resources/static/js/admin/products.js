@@ -61,6 +61,7 @@ function submit(pageNum) {
     const csrfToken = $("meta[name='_csrf']").attr("content");
 
     const formData = $('form#form-conditions').serialize();
+    console.log(formData);
 
     $.ajax({
         url: '/admin/products/',

@@ -182,13 +182,6 @@ body {
   border-inline-end-width: var(--form-border-width);
   border-radius: 0;
 }
-.form-control[type=file]:read-only {
-  padding: var(--form-readonly-padding-y) var(--form-readonly-padding-x);
-  color: var(--form-readonly-color);
-  background-color: var(--form-readonly-bg-color);
-  border-color: var(--form-readonly-border-color);
-  pointer-events: none;
-}
 
 /* label 태그 */
 .form-label {

@@ -1,0 +1,20 @@
+<div th:replace="~{/fragments/container :: container(~{::main})}">
+    <main>
+        <script src="/js/product/prod-details.js" defer></script>
+        <h1>Product Details</h1>
+        <div>
+            <p><b th:text="${productDTO.getProdName()}"></b></p>
+            <p th:text="${productDTO.getProdCategory()}"></p>
+            <p th:text="${productDTO.getProdKind()}"></p>
+            <p th:text="${productDTO.getProdPrice()}"></p>
+            <p th:text="${productDTO.getDiscntRate()}"></p>
+            <hr />
+            <div id="div-prod-cont">
+                <input th:each="cont : ${productDTO.getProdContList()}" type="hidden" th:value="${cont.getProdContName()}" />
+            </div>
+            <div th:each="pic : ${productDTO.getProdPicList()}">
+                <img th:src="@{/api/file/file/{filename}(filename=${pic.getProdPicName()})}" alt="product content image" />
+            </div>
+        </div>
+    </main>
+</div>
