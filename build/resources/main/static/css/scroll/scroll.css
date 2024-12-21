@@ -14,7 +14,7 @@ css/scroll/scroll.css
 }
 ::-webkit-scrollbar-thumb{
     width: 12px;
-    border: 3.5px solid var(--back-g-c);
+    border: 3.5px solid var(--bg-color);
     border-radius: 15px;
     background-color: #888888;
 }
