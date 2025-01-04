@@ -354,6 +354,7 @@ button.form-control {
   background-position: right 0.75rem center;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   box-sizing: border-box;
+  cursor: pointer;
   /* 클릭 했을 시 */
   /* 비활성화 시 */
   /*
