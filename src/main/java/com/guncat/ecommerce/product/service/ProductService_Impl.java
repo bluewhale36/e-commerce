@@ -1,13 +1,17 @@
 package com.guncat.ecommerce.product.service;
 
+import com.guncat.ecommerce.admin.product.domain.vo.JudgeProductModificationVO;
 import com.guncat.ecommerce.admin.product.dto.ProductDTOForAdmin;
 import com.guncat.ecommerce.admin.product.dto.ProductRegisterDTO;
 import com.guncat.ecommerce.common.dto.PagingResponseDTO;
 import com.guncat.ecommerce.common.enums.IsEnabled;
 import com.guncat.ecommerce.common.util.FileData;
+import com.guncat.ecommerce.common.vo.JudgeModificationVO;
 import com.guncat.ecommerce.product.domain.entity.ProdCont;
 import com.guncat.ecommerce.product.domain.entity.ProdPic;
 import com.guncat.ecommerce.product.domain.entity.Product;
+import com.guncat.ecommerce.product.dto.ProdContDTO;
+import com.guncat.ecommerce.product.dto.ProdPicDTO;
 import com.guncat.ecommerce.product.dto.ProductDTO;
 import com.guncat.ecommerce.product.dto.ProductPagingRequestDTO;
 import com.guncat.ecommerce.product.enums.ProdCategory;
@@ -16,20 +20,20 @@ import com.guncat.ecommerce.product.mapper.ProductMapper;
 import com.guncat.ecommerce.product.repository.ProdContRepository;
 import com.guncat.ecommerce.product.repository.ProdPicRepository;
 import com.guncat.ecommerce.product.repository.ProductRepository;
-import com.guncat.ecommerce.users.dto.UsersDTO;
 import com.guncat.ecommerce.users.exception.UnknownFilterTypeException;
 import com.guncat.ecommerce.users.service.IF_UsersService;
 import lombok.RequiredArgsConstructor;
+import org.junit.Assert;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -120,7 +124,7 @@ public class ProductService_Impl implements IF_ProductService {
         /*
             검색, 정렬, 필터 등의 조건에 더하여 페이징 조건을 사용하여 결과 조회.
          */
-        System.out.println(productPagingRequestDTO);
+//        System.out.println(productPagingRequestDTO);
 
         // JPA 페이징 객체
         Pageable pageable = PageRequest.of(
@@ -159,8 +163,37 @@ public class ProductService_Impl implements IF_ProductService {
                 productPagingRequestDTO.getFilterType(), productPagingRequestDTO.getFilterValue(), productPagingRequestDTO.getSortingType()
         );
 
-        System.out.println(dtoPage);
+//        System.out.println(dtoPage);
 
         return dtoPage;
+    }
+
+    @Override
+    public void updateProductInfo(ProductDTO modified) {
+//        System.out.println(modified);
+
+        String prodCode = modified.getProdCode();
+        ProductDTO existing = getProductByProdCode(prodCode);
+
+        JudgeProductModificationVO modificationVO = new JudgeProductModificationVO(existing, modified);
+
+        System.out.println("\n\nUPDATE VO\n\n");
+        System.out.println(modificationVO);
+
+        if (modificationVO.isBasicDataModified()) {
+            if (modificationVO.isProdContModified()) {
+
+            }
+            if (modificationVO.isProdPicModified()) {
+
+            }
+            Product p = productMapper.fromDTO(modified);
+            productRepository.saveAndFlush(p);
+        }
+        if (modificationVO.isEnumStatusModified()) {
+            productRepository.updateIsEnabledAndProdStatus(
+                    modified.getProdCode(), modified.getIsEnabled(), modified.getProdStatus()
+            );
+        }
     }
 }

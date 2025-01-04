@@ -55,10 +55,10 @@ public class Product {
     private IsEnabled isEnabled;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "pic_prod_code")
+    @JoinColumn(name = "pic_prod_code", insertable = false, updatable = false)
     private List<ProdPic> prodPicList;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cont_prod_code")
+    @JoinColumn(name = "cont_prod_code", insertable = false, updatable = false)
     private List<ProdCont> prodContList;
 }

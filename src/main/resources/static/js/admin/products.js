@@ -110,6 +110,7 @@ function printProductData(data) {
 <td class="p-2">
 <a class="text-primary" href="/admin/products/details/${content.prodCode}">${content.prodCode}</a>
 </td>
+<td class="p-2">${content.registeredAdminCode}</td>
 <td class="p-2">${content.prodName}</td>
 <td class="p-2">${content.prodCategory}</td>
 <td class="p-2">${content.prodKind}</td>
